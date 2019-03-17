@@ -3,73 +3,73 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://sameetsapra.com/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2019-03-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/work/</loc>
+    <loc>/work/</loc>
     <lastmod>2019-03-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/posts/implementing-program-status-scheduling-cask/</loc>
+    <loc>/posts/implementing-program-status-scheduling-cask/</loc>
     <lastmod>2017-08-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/posts/soa-made-simple/</loc>
+    <loc>/posts/soa-made-simple/</loc>
     <lastmod>2017-03-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/posts/summer-at-nextcapital/</loc>
+    <loc>/posts/summer-at-nextcapital/</loc>
     <lastmod>2016-02-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/posts/react-flux-backbone-fluxbone/</loc>
+    <loc>/posts/react-flux-backbone-fluxbone/</loc>
     <lastmod>2015-07-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/posts/the-power-of-pow/</loc>
+    <loc>/posts/the-power-of-pow/</loc>
     <lastmod>2014-08-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/posts/raspberry-pi-30-dollar-apple-tv/</loc>
+    <loc>/posts/raspberry-pi-30-dollar-apple-tv/</loc>
     <lastmod>2014-01-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/posts/mini-introduction-to-linux-servers/</loc>
+    <loc>/posts/mini-introduction-to-linux-servers/</loc>
     <lastmod>2013-12-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/posts/</loc>
+    <loc>/posts/</loc>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/categories/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2017-08-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/</loc>
+    <loc>/</loc>
     <lastmod>2019-03-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://sameetsapra.com/tags/</loc>
+    <loc>/tags/</loc>
     <priority>0</priority>
   </url>
   
