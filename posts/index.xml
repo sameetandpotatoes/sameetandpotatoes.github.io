@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on Sameet Sapra</title>
+        <link>http://sameetsapra.com/posts/</link>
+        <description>Recent content in Posts on Sameet Sapra</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <copyright>Sameet Sapra</copyright>
+        <lastBuildDate>Sat, 12 Aug 2017 00:00:00 +0000</lastBuildDate>
+        <atom:link href="http://sameetsapra.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Implementing Program Status Scheduling at Cask</title>
+            <link>http://sameetsapra.com/posts/implementing-program-status-scheduling-cask/</link>
+            <pubDate>Sat, 12 Aug 2017 00:00:00 +0000</pubDate>
+            
+            <guid>http://sameetsapra.com/posts/implementing-program-status-scheduling-cask/</guid>
+            <description>As an intern at Cask this summer, I had the opportunity to work on Cask’s flagship product: CDAP. CDAP (Cask Data Application Platform) helps you build big-data applications on a layer of abstraction over a distributed environment. You can develop CDAP applications and test them locally on your computer, then package the application, and run it on a distributed environment. Basically, you can use Mapreduce, Spark, and take advantage of the resources of a cluster, while knowing almost nothing about a distributed environment.</description>
+            <content type="html"><![CDATA[
+
+<p>As an intern at Cask this summer, I had the opportunity to work on Cask’s flagship product: CDAP. CDAP (Cask Data Application Platform) helps you build big-data applications on a layer of abstraction over a distributed environment. You can develop CDAP applications and test them locally on your computer, then package the application, and run it on a distributed environment. Basically, you can use Mapreduce, Spark, and take advantage of the resources of a cluster, while knowing almost nothing about a distributed environment. This summer, I implemented program status scheduling on the platform to allow users to trigger a programs based on the program status of another program, while passing event data between the program runs.</p>
+
+<h3 id="use-case">Use Case</h3>
+
+<p>There are many use cases for this feature. By introducing program dependencies, we can, in turn, have smaller programs that focus on completing one part of a greater data application process. For instance, we can build a CDAP pipeline to download a feed from FTP and perform some initial pre-processing, storing it into a CDAP dataset. If this process succeeds, then we would like to run a Spark job to process the dataset and output it to an S3 bucket.</p>
+
+<p>With this feature, this process can be separated into two pipelines, where the Spark job processing pipeline can run after the FTP download completes, and only if the FTP download completes.</p>
+
+<h3 id="designing">Designing</h3>
+
+<p>One of the unique aspects of my internship at Cask was the design process. Design played a very central role on this project, and on all projects at Cask. I spent a lot of time understanding the current process of understanding the lifecycle of programs on CDAP in both a standalone and distributed environment, as well as how programs can be scheduled in other ways (by time, or by the arrival of a new partition on a dataset).</p>
+
+<p>After discussing the design with others, a core piece of the design was that all programs need to be notified of their program status. When saving the program status in storage, we should also see if there was a schedule created that depends on that program status.
+In other words, we were thinking of something like this:</p>
+
+<p>The high level approach (highly simplified) is pretty straightforward:
+- A notification arrives.
+- Check in a queue if it satisfies a schedule.
+- Remove it from the queue, check if any constraints on that schedule are satisfied (time of day, concurrent runs, etc).
+- Start the program when those constraints are satisfied, if they&rsquo;re satisfied.</p>
+
+<h3 id="the-problems">The Problems</h3>
+
+<p>But it wasn&rsquo;t that simple. We didn&rsquo;t have a way of sending notifications that a program was done. The design told us we needed to refactor first. The refactoring work served two purposes:
+We needed to unify how program states were recorded, so that program states accurately depict the correct state of the program. Remember that CDAP works both on a standalone computer and in a distributed environment - the lifecycle of programs is very different in both environments, and needed consistent states in all cases.
+We needed to use an internal transactional messaging system (think Kafka, but transactional/consistent, and durable in case services go down) to guarantee that these notifications would arrive exactly once, in order, and be visible to any internal part of CDAP. These notifications needed to be sent from anywhere in CDAP.</p>
+
+<h3 id="improving-program-state-recording">Improving program state recording:</h3>
+
+<p>Let me talk a bit about the refactoring work, which became a bit more involved than expected:</p>
+
+<p>Unifying program states was tricky. We needed a separate way of recording program states in local mode and in distributed mode. Local mode was relatively easy. Each program has a runner to run the program, and a controller. We simply add a listener to each controller to look for state changes, and react to those. In distributed mode, however, it was inconsistent and too late to respond there. We needed to record program states in the Application Master in distributed mode, which is responsible for handing out containers/resources to the programs. This is the most accurate and reasonable place where the program state for any program is known.
+Then, using a transactional messaging system to record program states was also more difficult than we thought, for other reasons. Publishing messages was easy, but consuming them efficiently was a bit more difficult. We needed to built a message fetcher that would consume notifications in batch and persist the program states transactionally. Once we did all that, we needed to fix all of the tests to correctly check for the program status, as these notifications were a cleaner, more reliable, but slightly slower way of updating program states.
+With notifications being published and consumed internally by the platform, it became much easier to implement the original goal and follow the diagram: scheduling programs.</p>
+
+<p>At this point, a thread can subscribe to the topic on the messaging system and persist program state changes to the store. Scheduling can also subscribe to the same topic and schedule jobs.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>I learned a lot at Cask, about all of the buzz words around big data, about design, about open source software. Dealing with a distributed environment with multi-threaded code and handling race conditions made this a much more challenging internship than, say, classic web-development. I definitely have a greater appreciation for Java now.</p>
+
+<p>Check out my design docs I made:</p>
+
+<ol>
+<li>Program status scheduling: <a href="https://wiki.cask.co/display/CE/Program+Status+Based+Scheduling">https://wiki.cask.co/display/CE/Program+Status+Based+Scheduling</a></li>
+<li>Refining program states: <a href="https://wiki.cask.co/display/CE/Refined+Program+States">https://wiki.cask.co/display/CE/Refined+Program+States</a></li>
+</ol>
+]]></content>
+        </item>
+        
+        <item>
+            <title>SOA made simple</title>
+            <link>http://sameetsapra.com/posts/soa-made-simple/</link>
+            <pubDate>Fri, 31 Mar 2017 00:00:00 +0000</pubDate>
+            
+            <guid>http://sameetsapra.com/posts/soa-made-simple/</guid>
+            <description>Over the past two semesters, in the midst of learning algorithms, artificial intelligence search and probabilistic reasoning, low level C systems programming, and a whole lot more (10 classes, 8 CS, 2 STATS), I also got involved in an entirely unexpected open source venture: Arbor.
+But first, let&amp;rsquo;s talk about Project Groot. Project Groot is a venture by UIUC&amp;rsquo;s Association for Computing Machinery (ACM) to rebuild our organization&amp;rsquo;s website. Now, there were several issues we had long identified and complained about with the old system:</description>
+            <content type="html"><![CDATA[<p>Over the past two semesters, in the midst of learning algorithms, artificial intelligence search and probabilistic reasoning, low level C systems programming, and a whole lot more (10 classes, 8 CS, 2 STATS), I also got involved in an entirely unexpected open source venture: Arbor.</p>
+
+<p>But first, let&rsquo;s talk about Project Groot. Project Groot is a venture by UIUC&rsquo;s Association for Computing Machinery (ACM) to rebuild our organization&rsquo;s website. Now, there were several issues we had long identified and complained about with the old system:</p>
+
+<p>Hard to maintain. There was a massive, monolithic codebase that was written by a few students who had long graduated, so nobody knew how to maintain it anymore.
+Scalability issues. If we wanted to add a new feature, it required a lot of planning, debugging, and understanding the architecture
+Outdated. There were a bunch of outdated features that were adding a lot of unnecessary complexity to our code.
+Code. The code is written in one language / framework, and people have to either learn the language or not contribute at all (most students tended to choose the latter).
+So, we knew we had all of these issues, many of which sound familiar to anyone who has worked in the industry on legacy code. Our proposal to fix these issues was to redesign an application around a service oriented architecture (SOA).</p>
+
+<p>What does this mean?</p>
+
+<p>The system breaks down into two groups: clients and services. Every service (or microservice) can be thought of as a completely separate application running on a separate process. To prevent client (and service) developers to manage an ever-increasing list of services and their APIs, these microservices communicate to clients (and potentially other services) through an API Gateway. This gateway exposes all the services as a unified RESTful API while managing application level security, inter-service communication, and all routing of requests. These proves to be advantageous in several key areas:
+Services became much more simple. They manage one part of the website, and just that.
+Services can become replaceable and easier to recreate, update, or take out entirely.
+The API Gateway inherently serves as a documented, structured way of letting code maintainers know what routes are available from each service.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Summer at NextCapital</title>
+            <link>http://sameetsapra.com/posts/summer-at-nextcapital/</link>
+            <pubDate>Sun, 07 Feb 2016 00:00:00 +0000</pubDate>
+            
+            <guid>http://sameetsapra.com/posts/summer-at-nextcapital/</guid>
+            <description>I started my freshman year of Computer Science at UIUC this past fall, and in the past five months I&amp;rsquo;ve been on campus, I really enjoy every moment I&amp;rsquo;m there.
+The biggest difference I&amp;rsquo;ve noticed between high school classes and college classes is depth. The material that you learn in college is so much more interesting because the course focuses on a more specific topic within that field of study. Take quantum mechanics.</description>
+            <content type="html"><![CDATA[<p>I started my freshman year of Computer Science at UIUC this past fall, and in the past five months I&rsquo;ve been on campus, I really enjoy every moment I&rsquo;m there.</p>
+
+<p>The biggest difference I&rsquo;ve noticed between high school classes and college classes is depth. The material that you learn in college is so much more interesting because the course focuses on a more specific topic within that field of study. Take quantum mechanics. This is a class where we learn one of the fundamental oddities of the quantum world: how two things can exist in two different states at the same time. College courses allow me to experience the full depth of the material because of the time we can put into classes.</p>
+
+<p>Outside of class, I&rsquo;ve also gotten a job as a full stack web developer for the Cognitive Computation Group. This has also been a very enjoyable experience for me as I take a step back from so many web development frameworks and start from the basics, like PHP. I&rsquo;ve also had the opportunity to learn more about server configuration and the issues that can go along with that.</p>
+
+<p>UIUC was filled with career fairs, technical interviews, and free t-shirts. I talked to a lot of companies, handed out a lot of resumes, and got a lot of free swag in return. There were so many events and opportunities hosted by the student computer science organizations on campus to help look over resumes or prepare for technical interviews.</p>
+
+<p>I&rsquo;m excited to announce that I will be working at NextCapital in Chicago this coming summer as a full stack web developer. NextCapital helps both consumers and partners track their money, classifying their assets by bringing all of their accounts in one place.</p>
+
+<p>My goals at this company are to continue getting experience in the real world by taking business requirements and transforming them into technology solutions. I hope to gain more confidence by writing and testing good code and pushing it into production, where real consumers can benefit from my code.</p>
+
+<p>I hope I can take what I&rsquo;m learning, data structures and computer architecture, and begin to apply it to the real world.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>React &#43; Flux &#43; Backbone = FluxBone!</title>
+            <link>http://sameetsapra.com/posts/react-flux-backbone-fluxbone/</link>
+            <pubDate>Mon, 20 Jul 2015 00:00:00 +0000</pubDate>
+            
+            <guid>http://sameetsapra.com/posts/react-flux-backbone-fluxbone/</guid>
+            <description>This summer I&amp;rsquo;ve been interning at SimpleRelevance as a front end engineer. SimpleRelevance is a recommendation engine that uses machine learning and predictive analytics to enhance the digital marketing of other companies.
+Aside from mobile responsiveness, snappy AJAX forms, and some WordPress database migrations, one of my bigger projects has been rebuilding the website dashboard that presents key data to clients regarding how SimpleRelevance&amp;rsquo;s personalized marketing is generating more revenue and customer activity for clients.</description>
+            <content type="html"><![CDATA[<p>This summer I&rsquo;ve been interning at SimpleRelevance as a front end engineer. SimpleRelevance is a recommendation engine that uses machine learning and predictive analytics to enhance the digital marketing of other companies.</p>
+
+<p>Aside from mobile responsiveness, snappy AJAX forms, and some WordPress database migrations, one of my bigger projects has been rebuilding the website dashboard that presents key data to clients regarding how SimpleRelevance&rsquo;s personalized marketing is generating more revenue and customer activity for clients. You can print and download graphs and charts, search through users and view their recommended items, and filter items by their attributes.</p>
+
+<p>The original dashboard was written in Backbone.JS, a popular JavaScript framework, but it took only one look at the code before I knew that I had to rewrite it. There was reused code everywhere, and comments in almost every controller warning, and even apologizing, to the reader about the many &ldquo;code hacks&rdquo;. And frankly, it was slow.</p>
+
+<p>I was encouraged to look at React.JS instead, a JavaScript library specialized for user interfaces. React keeps track of two DOMs. Whenever it has to render the view, it compares changes between the two DOMs and only renders the changes from the virtual to the shadow DOM. In other words, React&rsquo;s speed really shines when the website constantly updates the DOM, because it&rsquo;s much faster than other methods that rerender the entire view. React is great for reusing code, and this works best when the app can be organized in a tree layout, with children as descendent React classes.</p>
+
+<p>But wait, React only functions as the V in MVC. We still need Backbone for the models and collections. But with React, we can implement Backbone more effectively.</p>
+
+<p>Part of the issue before was that data was mutating everywhere, and there were &ldquo;little hacks&rdquo; in place as part of laziness to write more code. React JS has its own solution. React JS is coupled with Flux, an architecture that emphasizes unidirectional data flow. Instead of models, views, and controllers, Flux has actions, dispatchers, stores, and views. Actions are triggered by interactions with the view. Actions invoke a dispatcher, which acts as a central hub that broadcasts payloads to register callbacks. Stores handle the changes in data and the actions and updating the store&rsquo;s state. The store emits a change event so that React knows it has to re render the view.</p>
+
+<p>Wait, so where does Backbone come in? Well, in integrating React and Backbone, the Backbone collection becomes the Flux store. In other words, the state of a component in React becomes the Backbone collection for that component.</p>
+
+<p>Pretty cool, huh?</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>The Power of POW</title>
+            <link>http://sameetsapra.com/posts/the-power-of-pow/</link>
+            <pubDate>Fri, 01 Aug 2014 00:00:00 +0000</pubDate>
+            
+            <guid>http://sameetsapra.com/posts/the-power-of-pow/</guid>
+            <description>Many developers have heard of services like forwardhq to share their localhost with collaborators or for mobile testing. Yet many of them don&amp;rsquo;t even know that Pow, a Rack server for OS X, allows you to do that for free. Setting it up is so simple, and you can just symlink your Rails directories to ~/.pow
+For local development, you simply head to http://myapp.dev
+This is good for testing apps locally, as you don&amp;rsquo;t even have to start the Rails server for your app.</description>
+            <content type="html"><![CDATA[<p>Many developers have heard of services like forwardhq to share their localhost with collaborators or for mobile testing. Yet many of them don&rsquo;t even know that Pow, a Rack server for OS X, allows you to do that for free. Setting it up is so simple, and you can just symlink your Rails directories to ~/.pow</p>
+
+<p>For local development, you simply head to <a href="http://myapp.dev">http://myapp.dev</a></p>
+
+<p>This is good for testing apps locally, as you don&rsquo;t even have to start the Rails server for your app. You simply head to the URL, and it just works. However, as Pow is a Rack server, it can host your app and share it, so you can also access it at: <a href="http://myapp.localipaddress.xip.io:20559">http://myapp.localipaddress.xip.io:20559</a></p>
+
+<p>Why is this better? Well, you can also navigate to the above URL on your iPad, an iPhone Simulator, to test your app on mobile devices without pushing it up to Heroku. And it&rsquo;s instant. Make a change in your Rails app and you can see the change straight away on your device.</p>
+
+<p>Pow is awesome.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Raspberry Pi: A $30 dollar Apple TV</title>
+            <link>http://sameetsapra.com/posts/raspberry-pi-30-dollar-apple-tv/</link>
+            <pubDate>Fri, 31 Jan 2014 00:00:00 +0000</pubDate>
+            
+            <guid>http://sameetsapra.com/posts/raspberry-pi-30-dollar-apple-tv/</guid>
+            <description>Tired of Apple&amp;rsquo;s constraints on all of its hardware? Have $30 dollars to spare? If so, you may want to consider buying yourself a shiny new Raspberry Pi and installing Raspbmc to set up your own Apple TV. Here&amp;rsquo;s what you need to get started:
+ Raspberry Pi w/ 4 GB minimum SD card HDMI Cable Ethernet Connection (optional but recommended)  Simply connect the SD Card, install the highly configurable OS, and load it onto your Raspberry Pi for wireless streaming among all of your iOS devices.</description>
+            <content type="html"><![CDATA[<p>Tired of Apple&rsquo;s constraints on all of its hardware? Have $30 dollars to spare? If so, you may want to consider buying yourself a shiny new Raspberry Pi and installing <em>Raspbmc</em> to set up your own Apple TV. Here&rsquo;s what you need to get started:</p>
+
+<ul>
+<li>Raspberry Pi w/ 4 GB minimum SD card</li>
+<li>HDMI Cable</li>
+<li>Ethernet Connection (optional but recommended)</li>
+</ul>
+
+<p>Simply connect the SD Card, install the highly configurable OS, and load it onto your Raspberry Pi for wireless streaming among all of your iOS devices. You can buy a homeplug that allows you to use wired connection through the electrical outlets in your home, or just opt for wireless connection (only recommended if you have Google Fiber). This Linux computer allows you to view photos from your iPad Mini, use the TV as an additional monitor from your Macbook Pro, or simply play music from your iPhone 5S.</p>
+
+<p>And, of course, if something like this can work for Apple devices, you know there&rsquo;s gotta be a way to do it on Android, too. One of the many Google Play store apps can enable similar functionality for Android.</p>
+
+<p>Happy watching!</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>A Mini Introduction to Linux Servers</title>
+            <link>http://sameetsapra.com/posts/mini-introduction-to-linux-servers/</link>
+            <pubDate>Thu, 26 Dec 2013 00:00:00 +0000</pubDate>
+            
+            <guid>http://sameetsapra.com/posts/mini-introduction-to-linux-servers/</guid>
+            <description>Linux is a wonderful operating system, full of features for everyone to tinker with. With a Linux server, you are essentially expanding these features into your intranet (yes intranet), to wirelessly stream to every device in your home, to host web servers, and more. Here’s how I set mine up:
+ Download and install a Linux distro. I picked Ubuntu (12.04 at the time) for its ease of installation, but you can just as easily pick Fedora, Debian, or go for a pure command line approach with a distro such as Gentoo.</description>
+            <content type="html"><![CDATA[<p>Linux is a wonderful operating system, full of features for everyone to tinker with. With a Linux server, you are essentially expanding these features into your intranet (yes <a href="https://en.wikipedia.org/wiki/Intranet">intranet</a>), to wirelessly stream to every device in your home, to host web servers, and more. Here’s how I set mine up:</p>
+
+<ol>
+<li><p>Download and install a Linux distro. I picked Ubuntu (12.04 at the time) for its ease of installation, but you can just as easily pick Fedora, Debian, or go for a pure command line approach with a distro such as <a href="http://www.gentoo.org/">Gentoo</a>.</p></li>
+
+<li><p>To access it from another computer, install ssh, and allow screen sharing. With these steps, you can now manage your server from another computer. All you need for the fastest server possible (besides SSD&rsquo;s hooked up in <a href="https://en.wikipedia.org/wiki/Standard_RAID_levels#RAID_0">Raid 0</a> of course) is an Ethernet connection from your server to your router.</p></li>
+
+<li><p>On your router configuration page, choose a static IP Address. It&rsquo;s extremely important to do this so that your router chooses the same IP Address every time your server turns on.</p></li>
+
+<li><p>If you are using the Linux server for file sharing and remote downloading, you probably want to mount a drive and sharing it in your intranet. This part can be tricky if you have more than one physical hard drive in your system and you want to maximize space. In this case, you need to look into <strong>Logical Volume Manager</strong> (LVM). With this, I was able to &ldquo;trick&rdquo; Linux into thinking my two 250 GB hard drives were one 500 GB hard drive. I wanted to do this because I wanted to combine my total storage into one drive.</p></li>
+
+<li><p>With your now maximized space, to share your network drive, you need to install <strong>Samba File Server</strong>. When installing Samba, make sure you specify that all users can read and write to the network drive without a password. In other words, unless you explicitly want a password on your network drive, you should allow anyone to add files to it.</p></li>
+
+<li><p>If you want to be able to access your content from anywhere in the world, you need to set up an Apache web server (by installing and specifying your network drive as the root folder). Then, on your router’s configuration page, you need to open the port that the Apache web server is running on (80 for http; 443 for https). Be warned: you need to specify a password for the Apache web server, otherwise anyone from around the world can download your content if they have your public IP address.</p></li>
+</ol>
+
+<p>Some tools you may want to consider for your new Linux server:</p>
+
+<ul>
+<li>Air PlayIt Server: With the compatible iPad/iPhone app, your Linux server can “serve” those Apple products.</li>
+<li>PS3MediaServer: Just as the name says, your PS3 can also recognize the Linux server and wirelessly stream to it.</li>
+<li>Wake On Lan: With WOL enabled in your computer&rsquo;s BIOS, an iPhone app, such as mWOL, can wake up your server from the touch of a button. Obviously, you need to be on the same network as the server. You can even set this up to be automated, so that your server wakes up at 9:00 AM every day, ready to stream.</li>
+</ul>
+
+<p>And that&rsquo;s it! This setup worked pretty well for me to remotely download and serve all sorts of content directly from the server.</p>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>
