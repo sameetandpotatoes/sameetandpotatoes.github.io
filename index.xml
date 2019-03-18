@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sameet Sapra</title>
-    <link>http://www.sameetsapra.com/</link>
+    <link>http://sameetandpotatoes.github.io/</link>
     <description>Recent content on Sameet Sapra</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Sameet Sapra</copyright>
     <lastBuildDate>Sun, 17 Mar 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://www.sameetsapra.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://sameetandpotatoes.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Reflecting on my last month in school</title>
-      <link>http://www.sameetsapra.com/posts/last-year-at-uiuc/</link>
+      <link>http://sameetandpotatoes.github.io/posts/last-year-at-uiuc/</link>
       <pubDate>Sun, 17 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/posts/last-year-at-uiuc/</guid>
+      <guid>http://sameetandpotatoes.github.io/posts/last-year-at-uiuc/</guid>
       <description>So I&amp;rsquo;ve finally reached the end of my four years here at the University of Illinois at Urbana-Champaign. I&amp;rsquo;ve certainly made a lot of memories here and I&amp;rsquo;ll be sad to see it all go.
 My last year on campus was spent doing a masters, and I wanted to reflect on that to also add my thoughts on completing a masters degree in computer science.
 Why did I do a masters?</description>
@@ -25,10 +25,10 @@ Why did I do a masters?</description>
     
     <item>
       <title>About</title>
-      <link>http://www.sameetsapra.com/about/</link>
+      <link>http://sameetandpotatoes.github.io/about/</link>
       <pubDate>Fri, 15 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/about/</guid>
+      <guid>http://sameetandpotatoes.github.io/about/</guid>
       <description>Hi there I don&amp;rsquo;t like writing bios so I&amp;rsquo;ll keep this short.
 My name is Sameet and I&amp;rsquo;m a software engineer at Facebook. You&amp;rsquo;ll find me coding, catching up on a new TV show, reading a book, or playing tennis.
 I&amp;rsquo;m also pretty passionate about exploring all sorts of DIY technology, whether it&amp;rsquo;s with IoT, setting up a PiHole to block ads on my intranet at the DNS level, or installing my own media server.</description>
@@ -36,10 +36,10 @@ I&amp;rsquo;m also pretty passionate about exploring all sorts of DIY technology
     
     <item>
       <title>Work Experience</title>
-      <link>http://www.sameetsapra.com/work/</link>
+      <link>http://sameetandpotatoes.github.io/work/</link>
       <pubDate>Fri, 15 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/work/</guid>
+      <guid>http://sameetandpotatoes.github.io/work/</guid>
       <description>Facebook Summer 2018
  Develop scanner to efficiently sample Cassandra tiers and record features on column families Record feature counts to identify and label user data on a data discovery platform Support feature aggregation to enable a 10x increase in reach across data warehouse  Cask Summer 2017
  Test and help release version 4.2 of CDAP, a data application platform for building big data applications on top of a local, distributed, or cloud sandbox environment Add the ability to schedule data pipelines based on the status of other pipelines on CDAP Implement transactional recording of all program states on the platform using Apache Twill  This felt the most like a software engineering internship thus far.</description>
@@ -47,49 +47,49 @@ I&amp;rsquo;m also pretty passionate about exploring all sorts of DIY technology
     
     <item>
       <title>Implementing Program Status Scheduling at Cask</title>
-      <link>http://www.sameetsapra.com/posts/implementing-program-status-scheduling-cask/</link>
+      <link>http://sameetandpotatoes.github.io/posts/implementing-program-status-scheduling-cask/</link>
       <pubDate>Sat, 12 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/posts/implementing-program-status-scheduling-cask/</guid>
+      <guid>http://sameetandpotatoes.github.io/posts/implementing-program-status-scheduling-cask/</guid>
       <description>As an intern at Cask this summer, I had the opportunity to work on Cask’s flagship product: CDAP. CDAP (Cask Data Application Platform) helps you build big-data applications on a layer of abstraction over a distributed environment. You can develop CDAP applications and test them locally on your computer, then package the application, and run it on a distributed environment. Basically, you can use Mapreduce, Spark, and take advantage of the resources of a cluster, while knowing almost nothing about a distributed environment.</description>
     </item>
     
     <item>
       <title>SOA made simple</title>
-      <link>http://www.sameetsapra.com/posts/soa-made-simple/</link>
+      <link>http://sameetandpotatoes.github.io/posts/soa-made-simple/</link>
       <pubDate>Fri, 31 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/posts/soa-made-simple/</guid>
+      <guid>http://sameetandpotatoes.github.io/posts/soa-made-simple/</guid>
       <description>Over the past two semesters, in the midst of learning algorithms, artificial intelligence search and probabilistic reasoning, low level C systems programming, and a whole lot more (10 classes, 8 CS, 2 STATS), I also got involved in an entirely unexpected open source venture: Arbor.
 But first, let&amp;rsquo;s talk about Project Groot. Project Groot is a venture by UIUC&amp;rsquo;s Association for Computing Machinery (ACM) to rebuild our organization&amp;rsquo;s website. Now, there were several issues we had long identified and complained about with the old system:</description>
     </item>
     
     <item>
       <title>Summer at NextCapital</title>
-      <link>http://www.sameetsapra.com/posts/summer-at-nextcapital/</link>
+      <link>http://sameetandpotatoes.github.io/posts/summer-at-nextcapital/</link>
       <pubDate>Sun, 07 Feb 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/posts/summer-at-nextcapital/</guid>
+      <guid>http://sameetandpotatoes.github.io/posts/summer-at-nextcapital/</guid>
       <description>I started my freshman year of Computer Science at UIUC this past fall, and in the past five months I&amp;rsquo;ve been on campus, I really enjoy every moment I&amp;rsquo;m there.
 The biggest difference I&amp;rsquo;ve noticed between high school classes and college classes is depth. The material that you learn in college is so much more interesting because the course focuses on a more specific topic within that field of study. Take quantum mechanics.</description>
     </item>
     
     <item>
       <title>React &#43; Flux &#43; Backbone = FluxBone!</title>
-      <link>http://www.sameetsapra.com/posts/react-flux-backbone-fluxbone/</link>
+      <link>http://sameetandpotatoes.github.io/posts/react-flux-backbone-fluxbone/</link>
       <pubDate>Mon, 20 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/posts/react-flux-backbone-fluxbone/</guid>
+      <guid>http://sameetandpotatoes.github.io/posts/react-flux-backbone-fluxbone/</guid>
       <description>This summer I&amp;rsquo;ve been interning at SimpleRelevance as a front end engineer. SimpleRelevance is a recommendation engine that uses machine learning and predictive analytics to enhance the digital marketing of other companies.
 Aside from mobile responsiveness, snappy AJAX forms, and some WordPress database migrations, one of my bigger projects has been rebuilding the website dashboard that presents key data to clients regarding how SimpleRelevance&amp;rsquo;s personalized marketing is generating more revenue and customer activity for clients.</description>
     </item>
     
     <item>
       <title>The Power of POW</title>
-      <link>http://www.sameetsapra.com/posts/the-power-of-pow/</link>
+      <link>http://sameetandpotatoes.github.io/posts/the-power-of-pow/</link>
       <pubDate>Fri, 01 Aug 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/posts/the-power-of-pow/</guid>
+      <guid>http://sameetandpotatoes.github.io/posts/the-power-of-pow/</guid>
       <description>Many developers have heard of services like forwardhq to share their localhost with collaborators or for mobile testing. Yet many of them don&amp;rsquo;t even know that Pow, a Rack server for OS X, allows you to do that for free. Setting it up is so simple, and you can just symlink your Rails directories to ~/.pow
 For local development, you simply head to http://myapp.dev
 This is good for testing apps locally, as you don&amp;rsquo;t even have to start the Rails server for your app.</description>
@@ -97,30 +97,30 @@ This is good for testing apps locally, as you don&amp;rsquo;t even have to start
     
     <item>
       <title>Raspberry Pi: A $30 dollar Apple TV</title>
-      <link>http://www.sameetsapra.com/posts/raspberry-pi-30-dollar-apple-tv/</link>
+      <link>http://sameetandpotatoes.github.io/posts/raspberry-pi-30-dollar-apple-tv/</link>
       <pubDate>Fri, 31 Jan 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/posts/raspberry-pi-30-dollar-apple-tv/</guid>
+      <guid>http://sameetandpotatoes.github.io/posts/raspberry-pi-30-dollar-apple-tv/</guid>
       <description>Tired of Apple&amp;rsquo;s constraints on all of its hardware? Have $30 dollars to spare? If so, you may want to consider buying yourself a shiny new Raspberry Pi and installing Raspbmc to set up your own Apple TV. Here&amp;rsquo;s what you need to get started:
  Raspberry Pi w/ 4 GB minimum SD card HDMI Cable Ethernet Connection (optional but recommended)  Simply connect the SD Card, install the highly configurable OS, and load it onto your Raspberry Pi for wireless streaming among all of your iOS devices.</description>
     </item>
     
     <item>
       <title>A Mini Introduction to Linux Servers</title>
-      <link>http://www.sameetsapra.com/posts/mini-introduction-to-linux-servers/</link>
+      <link>http://sameetandpotatoes.github.io/posts/mini-introduction-to-linux-servers/</link>
       <pubDate>Thu, 26 Dec 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/posts/mini-introduction-to-linux-servers/</guid>
+      <guid>http://sameetandpotatoes.github.io/posts/mini-introduction-to-linux-servers/</guid>
       <description>Linux is a wonderful operating system, full of features for everyone to tinker with. With a Linux server, you are essentially expanding these features into your intranet (yes intranet), to wirelessly stream to every device in your home, to host web servers, and more. Here’s how I set mine up:
  Download and install a Linux distro. I picked Ubuntu (12.04 at the time) for its ease of installation, but you can just as easily pick Fedora, Debian, or go for a pure command line approach with a distro such as Gentoo.</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://www.sameetsapra.com/posts/</link>
+      <link>http://sameetandpotatoes.github.io/posts/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://www.sameetsapra.com/posts/</guid>
+      <guid>http://sameetandpotatoes.github.io/posts/</guid>
       <description></description>
     </item>
     
