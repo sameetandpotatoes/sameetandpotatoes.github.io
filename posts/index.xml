@@ -2,20 +2,59 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on Sameet Sapra</title>
-        <link>http://sameetandpotatoes.github.io/posts/</link>
+        <link>http://www.sameetsapra.com/posts/</link>
         <description>Recent content in Posts on Sameet Sapra</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>Sameet Sapra</copyright>
-        <lastBuildDate>Sat, 12 Aug 2017 00:00:00 +0000</lastBuildDate>
-        <atom:link href="http://sameetandpotatoes.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        <lastBuildDate>Sun, 17 Mar 2019 00:00:00 +0000</lastBuildDate>
+        <atom:link href="http://www.sameetsapra.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Reflecting on my last month in school</title>
+            <link>http://www.sameetsapra.com/posts/last-year-at-uiuc/</link>
+            <pubDate>Sun, 17 Mar 2019 00:00:00 +0000</pubDate>
+            
+            <guid>http://www.sameetsapra.com/posts/last-year-at-uiuc/</guid>
+            <description>So I&amp;rsquo;ve finally reached the end of my four years here at the University of Illinois at Urbana-Champaign. I&amp;rsquo;ve certainly made a lot of memories here and I&amp;rsquo;ll be sad to see it all go.
+My last year on campus was spent doing a masters, and I wanted to reflect on that to also add my thoughts on completing a masters degree in computer science.
+Why did I do a masters?</description>
+            <content type="html"><![CDATA[
+
+<p>So I&rsquo;ve finally reached the end of my four years here at the University of Illinois at Urbana-Champaign. I&rsquo;ve certainly made a lot of memories here and I&rsquo;ll be sad to see it all go.</p>
+
+<p>My last year on campus was spent doing a masters, and I wanted to reflect on that to also add my thoughts on completing a masters degree in computer science.</p>
+
+<h4 id="why-did-i-do-a-masters">Why did I do a masters?</h4>
+
+<p>The most important distinction in my reason to get a masters was to merely have an extra year at school. See, I finished my Bachelors faster than the average degree because of high school credit. 3 years on campus felt too short, and I wanted to experience a variety of internships to have a better idea of what I wanted to do after college, hence a 1 year masters program (without research)</p>
+
+<h4 id="how-were-graduate-level-classes">How were graduate level classes?</h4>
+
+<p>I discovered soon after I started my masters that grad level courses (CS 5xx classes) were far more research-oriented than what I wanted. The average courseload is a lot easier and the grades were higher, but I didn&rsquo;t feel like I learned many practical skills compared to my undergraduate years. It felt more like: read this paper, discuss some concepts around it, and rinse and repeat.</p>
+
+<p>Now, I think part of the reason I felt this way is due to completing my masters degree at the same university as my bachelors. My mindset didn&rsquo;t really have to adjust between years, and I knew almost everything about the school already so I knew what to expect.</p>
+
+<p>Had I done a two year masters program at a different university, I believe I would have spent time adjusting to the new atmosphere and been overwhelmed (in a good way) by everything around me.</p>
+
+<h4 id="what-s-a-masters-degree-without-research">What&rsquo;s a masters degree without research?</h4>
+
+<p>That&rsquo;s a good point. A really good point, in fact. The most important thing I realized during my masters is that <strong>classes are secondary to research</strong>. Classes, at least the ones I took, are meant to supplement your curiosity in that specific subfield of your focus area. They teach you how to read more papers and hone your analytical skills in extracting relevant information out of a complex study.</p>
+
+<p>&ndash; TODO insert flow chart</p>
+
+<h4 id="ta-vs-ra">TA vs RA</h4>
+
+<p>If you aren&rsquo;t doing research under a professor, the upside is you get to teach with a professor, under a <em>teaching assistantship</em> position. This was the most enjoyable part of my year on campus by far. I&rsquo;ve already been interested in computer science, so teaching it to a group of students was the natural next step for me. I really enjoyed having the responsibility to help students by answering their questions, holding office hours, and teaching discussion sections.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Implementing Program Status Scheduling at Cask</title>
-            <link>http://sameetandpotatoes.github.io/posts/implementing-program-status-scheduling-cask/</link>
+            <link>http://www.sameetsapra.com/posts/implementing-program-status-scheduling-cask/</link>
             <pubDate>Sat, 12 Aug 2017 00:00:00 +0000</pubDate>
             
-            <guid>http://sameetandpotatoes.github.io/posts/implementing-program-status-scheduling-cask/</guid>
+            <guid>http://www.sameetsapra.com/posts/implementing-program-status-scheduling-cask/</guid>
             <description>As an intern at Cask this summer, I had the opportunity to work on Cask’s flagship product: CDAP. CDAP (Cask Data Application Platform) helps you build big-data applications on a layer of abstraction over a distributed environment. You can develop CDAP applications and test them locally on your computer, then package the application, and run it on a distributed environment. Basically, you can use Mapreduce, Spark, and take advantage of the resources of a cluster, while knowing almost nothing about a distributed environment.</description>
             <content type="html"><![CDATA[
 
@@ -40,19 +79,29 @@ In other words, we were thinking of something like this:</p>
 - Remove it from the queue, check if any constraints on that schedule are satisfied (time of day, concurrent runs, etc).
 - Start the program when those constraints are satisfied, if they&rsquo;re satisfied.</p>
 
+<p>A big part of the design was understanding the entire lifecycle of a program on our platform. All that work was consolidated into a diagram like the one below:</p>
+
+<p><img src="/img/cask/state_diagram.png" alt="" /></p>
+
 <h3 id="the-problems">The Problems</h3>
 
-<p>But it wasn&rsquo;t that simple. We didn&rsquo;t have a way of sending notifications that a program was done. The design told us we needed to refactor first. The refactoring work served two purposes:
-We needed to unify how program states were recorded, so that program states accurately depict the correct state of the program. Remember that CDAP works both on a standalone computer and in a distributed environment - the lifecycle of programs is very different in both environments, and needed consistent states in all cases.
-We needed to use an internal transactional messaging system (think Kafka, but transactional/consistent, and durable in case services go down) to guarantee that these notifications would arrive exactly once, in order, and be visible to any internal part of CDAP. These notifications needed to be sent from anywhere in CDAP.</p>
+<p>But it wasn&rsquo;t that simple. We didn&rsquo;t have a way of sending notifications that a program was done. The design told us we needed to refactor first. The refactoring work served two purposes:</p>
+
+<ol>
+<li><p>We needed to unify how program states were recorded, so that program states accurately depict the correct state of the program. Remember that CDAP works both on a standalone computer and in a distributed environment - the lifecycle of programs is very different in both environments, and needed consistent states in all cases.</p></li>
+
+<li><p>We needed to use an internal transactional messaging system (think Kafka, but transactional/consistent, and durable in case services go down) to guarantee that these notifications would arrive exactly once, in order, and be visible to any internal part of CDAP. These notifications needed to be sent from anywhere in CDAP.</p></li>
+</ol>
 
 <h3 id="improving-program-state-recording">Improving program state recording:</h3>
 
 <p>Let me talk a bit about the refactoring work, which became a bit more involved than expected:</p>
 
-<p>Unifying program states was tricky. We needed a separate way of recording program states in local mode and in distributed mode. Local mode was relatively easy. Each program has a runner to run the program, and a controller. We simply add a listener to each controller to look for state changes, and react to those. In distributed mode, however, it was inconsistent and too late to respond there. We needed to record program states in the Application Master in distributed mode, which is responsible for handing out containers/resources to the programs. This is the most accurate and reasonable place where the program state for any program is known.
-Then, using a transactional messaging system to record program states was also more difficult than we thought, for other reasons. Publishing messages was easy, but consuming them efficiently was a bit more difficult. We needed to built a message fetcher that would consume notifications in batch and persist the program states transactionally. Once we did all that, we needed to fix all of the tests to correctly check for the program status, as these notifications were a cleaner, more reliable, but slightly slower way of updating program states.
-With notifications being published and consumed internally by the platform, it became much easier to implement the original goal and follow the diagram: scheduling programs.</p>
+<p>Unifying program states was tricky. We needed a separate way of recording program states in local mode and in distributed mode. Local mode was relatively easy. Each program has a runner to run the program, and a controller. We simply add a listener to each controller to look for state changes, and react to those. In distributed mode, however, it was inconsistent and too late to respond there. We needed to record program states in the Application Master in distributed mode, which is responsible for handing out containers/resources to the programs. This is the most accurate and reasonable place where the program state for any program is known.</p>
+
+<p>Then, using a transactional messaging system to record program states was also more difficult than we thought, for other reasons. Publishing messages was easy, but consuming them efficiently was a bit more difficult. We needed to built a message fetcher that would consume notifications in batch and persist the program states transactionally. Once we did all that, we needed to fix all of the tests to correctly check for the program status, as these notifications were a cleaner, more reliable, but slightly slower way of updating program states.</p>
+
+<p>With notifications being published and consumed internally by the platform, it became much easier to implement the original goal and follow the diagram: scheduling programs.</p>
 
 <p>At this point, a thread can subscribe to the topic on the messaging system and persist program state changes to the store. Scheduling can also subscribe to the same topic and schedule jobs.</p>
 
@@ -71,37 +120,58 @@ With notifications being published and consumed internally by the platform, it b
         
         <item>
             <title>SOA made simple</title>
-            <link>http://sameetandpotatoes.github.io/posts/soa-made-simple/</link>
+            <link>http://www.sameetsapra.com/posts/soa-made-simple/</link>
             <pubDate>Fri, 31 Mar 2017 00:00:00 +0000</pubDate>
             
-            <guid>http://sameetandpotatoes.github.io/posts/soa-made-simple/</guid>
+            <guid>http://www.sameetsapra.com/posts/soa-made-simple/</guid>
             <description>Over the past two semesters, in the midst of learning algorithms, artificial intelligence search and probabilistic reasoning, low level C systems programming, and a whole lot more (10 classes, 8 CS, 2 STATS), I also got involved in an entirely unexpected open source venture: Arbor.
 But first, let&amp;rsquo;s talk about Project Groot. Project Groot is a venture by UIUC&amp;rsquo;s Association for Computing Machinery (ACM) to rebuild our organization&amp;rsquo;s website. Now, there were several issues we had long identified and complained about with the old system:</description>
-            <content type="html"><![CDATA[<p>Over the past two semesters, in the midst of learning algorithms, artificial intelligence search and probabilistic reasoning, low level C systems programming, and a whole lot more (10 classes, 8 CS, 2 STATS), I also got involved in an entirely unexpected open source venture: Arbor.</p>
+            <content type="html"><![CDATA[
+
+<p>Over the past two semesters, in the midst of learning algorithms, artificial intelligence search and probabilistic reasoning, low level C systems programming, and a whole lot more (10 classes, 8 CS, 2 STATS), I also got involved in an entirely unexpected open source venture: Arbor.</p>
 
 <p>But first, let&rsquo;s talk about Project Groot. Project Groot is a venture by UIUC&rsquo;s Association for Computing Machinery (ACM) to rebuild our organization&rsquo;s website. Now, there were several issues we had long identified and complained about with the old system:</p>
 
-<p>Hard to maintain. There was a massive, monolithic codebase that was written by a few students who had long graduated, so nobody knew how to maintain it anymore.
-Scalability issues. If we wanted to add a new feature, it required a lot of planning, debugging, and understanding the architecture
-Outdated. There were a bunch of outdated features that were adding a lot of unnecessary complexity to our code.
-Code. The code is written in one language / framework, and people have to either learn the language or not contribute at all (most students tended to choose the latter).
-So, we knew we had all of these issues, many of which sound familiar to anyone who has worked in the industry on legacy code. Our proposal to fix these issues was to redesign an application around a service oriented architecture (SOA).</p>
+<ul>
+<li>Hard to maintain. There was a massive, monolithic codebase that was written by a few students who had long graduated, so nobody knew how to maintain it anymore.</li>
+<li>Scalability issues. If we wanted to add a new feature, it required a lot of planning, debugging, and understanding the architecture</li>
+<li>Outdated. There were a bunch of outdated features that were adding a lot of unnecessary complexity to our code.</li>
+<li>Code. The code is written in one language / framework, and people have to either learn the language or not contribute at all (most students tended to choose the latter).</li>
+</ul>
 
-<p>What does this mean?</p>
+<p>So, we knew we had all of these issues, many of which sound familiar to anyone who has worked in the industry on legacy code. Our proposal to fix these issues was to redesign an application around a service oriented architecture (SOA).</p>
 
-<p>The system breaks down into two groups: clients and services. Every service (or microservice) can be thought of as a completely separate application running on a separate process. To prevent client (and service) developers to manage an ever-increasing list of services and their APIs, these microservices communicate to clients (and potentially other services) through an API Gateway. This gateway exposes all the services as a unified RESTful API while managing application level security, inter-service communication, and all routing of requests. These proves to be advantageous in several key areas:
-Services became much more simple. They manage one part of the website, and just that.
-Services can become replaceable and easier to recreate, update, or take out entirely.
-The API Gateway inherently serves as a documented, structured way of letting code maintainers know what routes are available from each service.</p>
+<h2 id="what-does-this-mean">What does this mean?</h2>
+
+<p>The system breaks down into two groups: clients and services. Every service (or microservice) can be thought of as a completely separate application running on a separate process. To prevent client (and service) developers to manage an ever-increasing list of services and their APIs, these microservices communicate to clients (and potentially other services) through an API Gateway. This gateway exposes all the services as a unified RESTful API while managing application level security, inter-service communication, and all routing of requests.</p>
+
+<p>This proves to be advantageous in several key areas:</p>
+
+<ol>
+<li>Services became much more simple. They manage one part of the website, and just that.</li>
+<li>Services can become replaceable and easier to recreate, update, or take out entirely.</li>
+<li>The API Gateway inherently serves as a documented, structured way of letting code maintainers know what routes are available from each service.</li>
+</ol>
+
+<p>This gateway became so important and central to our platform that we decided to open source it. Since it reminded us of branching out, we called it <a href="https://github.com/arbor-dev/arbor">Arbor</a>. Take a look at some sample code for registering a microservice in the framework:</p>
+
+<p><img src="/img/soa/code.jpg" alt="" /></p>
+
+<h2 id="links">Links</h2>
+
+<ul>
+<li>Link to the full whitepaper: <a href="/pdf/Groot Whitepaper.pdf">Project Groot, Designed to Be Replaced</a>.</li>
+<li>Link to the Go microservice framework that was developed: <a href="https://github.com/arbor-dev/arbor">arbor</a></li>
+</ul>
 ]]></content>
         </item>
         
         <item>
             <title>Summer at NextCapital</title>
-            <link>http://sameetandpotatoes.github.io/posts/summer-at-nextcapital/</link>
+            <link>http://www.sameetsapra.com/posts/summer-at-nextcapital/</link>
             <pubDate>Sun, 07 Feb 2016 00:00:00 +0000</pubDate>
             
-            <guid>http://sameetandpotatoes.github.io/posts/summer-at-nextcapital/</guid>
+            <guid>http://www.sameetsapra.com/posts/summer-at-nextcapital/</guid>
             <description>I started my freshman year of Computer Science at UIUC this past fall, and in the past five months I&amp;rsquo;ve been on campus, I really enjoy every moment I&amp;rsquo;m there.
 The biggest difference I&amp;rsquo;ve noticed between high school classes and college classes is depth. The material that you learn in college is so much more interesting because the course focuses on a more specific topic within that field of study. Take quantum mechanics.</description>
             <content type="html"><![CDATA[<p>I started my freshman year of Computer Science at UIUC this past fall, and in the past five months I&rsquo;ve been on campus, I really enjoy every moment I&rsquo;m there.</p>
@@ -122,10 +192,10 @@ The biggest difference I&amp;rsquo;ve noticed between high school classes and co
         
         <item>
             <title>React &#43; Flux &#43; Backbone = FluxBone!</title>
-            <link>http://sameetandpotatoes.github.io/posts/react-flux-backbone-fluxbone/</link>
+            <link>http://www.sameetsapra.com/posts/react-flux-backbone-fluxbone/</link>
             <pubDate>Mon, 20 Jul 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://sameetandpotatoes.github.io/posts/react-flux-backbone-fluxbone/</guid>
+            <guid>http://www.sameetsapra.com/posts/react-flux-backbone-fluxbone/</guid>
             <description>This summer I&amp;rsquo;ve been interning at SimpleRelevance as a front end engineer. SimpleRelevance is a recommendation engine that uses machine learning and predictive analytics to enhance the digital marketing of other companies.
 Aside from mobile responsiveness, snappy AJAX forms, and some WordPress database migrations, one of my bigger projects has been rebuilding the website dashboard that presents key data to clients regarding how SimpleRelevance&amp;rsquo;s personalized marketing is generating more revenue and customer activity for clients.</description>
             <content type="html"><![CDATA[<p>This summer I&rsquo;ve been interning at SimpleRelevance as a front end engineer. SimpleRelevance is a recommendation engine that uses machine learning and predictive analytics to enhance the digital marketing of other companies.</p>
@@ -148,10 +218,10 @@ Aside from mobile responsiveness, snappy AJAX forms, and some WordPress database
         
         <item>
             <title>The Power of POW</title>
-            <link>http://sameetandpotatoes.github.io/posts/the-power-of-pow/</link>
+            <link>http://www.sameetsapra.com/posts/the-power-of-pow/</link>
             <pubDate>Fri, 01 Aug 2014 00:00:00 +0000</pubDate>
             
-            <guid>http://sameetandpotatoes.github.io/posts/the-power-of-pow/</guid>
+            <guid>http://www.sameetsapra.com/posts/the-power-of-pow/</guid>
             <description>Many developers have heard of services like forwardhq to share their localhost with collaborators or for mobile testing. Yet many of them don&amp;rsquo;t even know that Pow, a Rack server for OS X, allows you to do that for free. Setting it up is so simple, and you can just symlink your Rails directories to ~/.pow
 For local development, you simply head to http://myapp.dev
 This is good for testing apps locally, as you don&amp;rsquo;t even have to start the Rails server for your app.</description>
@@ -169,10 +239,10 @@ This is good for testing apps locally, as you don&amp;rsquo;t even have to start
         
         <item>
             <title>Raspberry Pi: A $30 dollar Apple TV</title>
-            <link>http://sameetandpotatoes.github.io/posts/raspberry-pi-30-dollar-apple-tv/</link>
+            <link>http://www.sameetsapra.com/posts/raspberry-pi-30-dollar-apple-tv/</link>
             <pubDate>Fri, 31 Jan 2014 00:00:00 +0000</pubDate>
             
-            <guid>http://sameetandpotatoes.github.io/posts/raspberry-pi-30-dollar-apple-tv/</guid>
+            <guid>http://www.sameetsapra.com/posts/raspberry-pi-30-dollar-apple-tv/</guid>
             <description>Tired of Apple&amp;rsquo;s constraints on all of its hardware? Have $30 dollars to spare? If so, you may want to consider buying yourself a shiny new Raspberry Pi and installing Raspbmc to set up your own Apple TV. Here&amp;rsquo;s what you need to get started:
  Raspberry Pi w/ 4 GB minimum SD card HDMI Cable Ethernet Connection (optional but recommended)  Simply connect the SD Card, install the highly configurable OS, and load it onto your Raspberry Pi for wireless streaming among all of your iOS devices.</description>
             <content type="html"><![CDATA[<p>Tired of Apple&rsquo;s constraints on all of its hardware? Have $30 dollars to spare? If so, you may want to consider buying yourself a shiny new Raspberry Pi and installing <em>Raspbmc</em> to set up your own Apple TV. Here&rsquo;s what you need to get started:</p>
@@ -193,10 +263,10 @@ This is good for testing apps locally, as you don&amp;rsquo;t even have to start
         
         <item>
             <title>A Mini Introduction to Linux Servers</title>
-            <link>http://sameetandpotatoes.github.io/posts/mini-introduction-to-linux-servers/</link>
+            <link>http://www.sameetsapra.com/posts/mini-introduction-to-linux-servers/</link>
             <pubDate>Thu, 26 Dec 2013 00:00:00 +0000</pubDate>
             
-            <guid>http://sameetandpotatoes.github.io/posts/mini-introduction-to-linux-servers/</guid>
+            <guid>http://www.sameetsapra.com/posts/mini-introduction-to-linux-servers/</guid>
             <description>Linux is a wonderful operating system, full of features for everyone to tinker with. With a Linux server, you are essentially expanding these features into your intranet (yes intranet), to wirelessly stream to every device in your home, to host web servers, and more. Here’s how I set mine up:
  Download and install a Linux distro. I picked Ubuntu (12.04 at the time) for its ease of installation, but you can just as easily pick Fedora, Debian, or go for a pure command line approach with a distro such as Gentoo.</description>
             <content type="html"><![CDATA[<p>Linux is a wonderful operating system, full of features for everyone to tinker with. With a Linux server, you are essentially expanding these features into your intranet (yes <a href="https://en.wikipedia.org/wiki/Intranet">intranet</a>), to wirelessly stream to every device in your home, to host web servers, and more. Here’s how I set mine up:</p>

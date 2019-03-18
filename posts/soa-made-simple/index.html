@@ -11,7 +11,7 @@
 But first, let&amp;rsquo;s talk about Project Groot. Project Groot is a venture by UIUC&amp;rsquo;s Association for Computing Machinery (ACM) to rebuild our organization&amp;rsquo;s website. Now, there were several issues we had long identified and complained about with the old system:" />
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://sameetandpotatoes.github.io/posts/soa-made-simple/" />
+<link rel="canonical" href="http://www.sameetsapra.com/posts/soa-made-simple/" />
 
 
 <title>
@@ -28,7 +28,7 @@ But first, let&amp;rsquo;s talk about Project Groot. Project Groot is a venture 
     type="text/css">
 
 
-<link rel="stylesheet" href="http://sameetandpotatoes.github.io/scss/main.min.099699ab246bf26f50616f7c9f00c79d46110459d1bd727b2d07d6fc09ece082.css">
+<link rel="stylesheet" href="http://www.sameetsapra.com/scss/main.min.099699ab246bf26f50616f7c9f00c79d46110459d1bd727b2d07d6fc09ece082.css">
 
 
 
@@ -46,7 +46,7 @@ But first, let&rsquo;s talk about Project Groot. Project Groot is a venture by U
 
 <meta itemprop="datePublished" content="2017-03-31T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-03-31T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="368">
+<meta itemprop="wordCount" content="432">
 
 
 
@@ -88,7 +88,7 @@ But first, let&rsquo;s talk about Project Groot. Project Groot is a venture by U
         <span class="header__right">
             
                 <nav class="menu">
-    <ul class="menu__inner"><li><a href="http://sameetandpotatoes.github.io/about">About</a></li><li><a href="http://sameetandpotatoes.github.io/posts">Posts</a></li><li><a href="http://sameetandpotatoes.github.io/work">Work</a></li>
+    <ul class="menu__inner"><li><a href="http://www.sameetsapra.com/about">About</a></li><li><a href="http://www.sameetsapra.com/posts">Posts</a></li><li><a href="http://www.sameetsapra.com/work">Work</a></li>
     </ul>
 </nav>
 
@@ -116,7 +116,7 @@ But first, let&rsquo;s talk about Project Groot. Project Groot is a venture by U
     <main class="post">
 
         <div class="post-info">
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>2 minutes
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
 
             
 
@@ -124,27 +124,48 @@ But first, let&rsquo;s talk about Project Groot. Project Groot is a venture by U
         </div>
 
         <article>
-            <h2 class="post-title"><a href="http://sameetandpotatoes.github.io/posts/soa-made-simple/">SOA made simple</a></h2>
+            <h2 class="post-title"><a href="http://www.sameetsapra.com/posts/soa-made-simple/">SOA made simple</a></h2>
 
             
 
             <div class="post-content">
-                <p>Over the past two semesters, in the midst of learning algorithms, artificial intelligence search and probabilistic reasoning, low level C systems programming, and a whole lot more (10 classes, 8 CS, 2 STATS), I also got involved in an entirely unexpected open source venture: Arbor.</p>
+                
+
+<p>Over the past two semesters, in the midst of learning algorithms, artificial intelligence search and probabilistic reasoning, low level C systems programming, and a whole lot more (10 classes, 8 CS, 2 STATS), I also got involved in an entirely unexpected open source venture: Arbor.</p>
 
 <p>But first, let&rsquo;s talk about Project Groot. Project Groot is a venture by UIUC&rsquo;s Association for Computing Machinery (ACM) to rebuild our organization&rsquo;s website. Now, there were several issues we had long identified and complained about with the old system:</p>
 
-<p>Hard to maintain. There was a massive, monolithic codebase that was written by a few students who had long graduated, so nobody knew how to maintain it anymore.
-Scalability issues. If we wanted to add a new feature, it required a lot of planning, debugging, and understanding the architecture
-Outdated. There were a bunch of outdated features that were adding a lot of unnecessary complexity to our code.
-Code. The code is written in one language / framework, and people have to either learn the language or not contribute at all (most students tended to choose the latter).
-So, we knew we had all of these issues, many of which sound familiar to anyone who has worked in the industry on legacy code. Our proposal to fix these issues was to redesign an application around a service oriented architecture (SOA).</p>
+<ul>
+<li>Hard to maintain. There was a massive, monolithic codebase that was written by a few students who had long graduated, so nobody knew how to maintain it anymore.</li>
+<li>Scalability issues. If we wanted to add a new feature, it required a lot of planning, debugging, and understanding the architecture</li>
+<li>Outdated. There were a bunch of outdated features that were adding a lot of unnecessary complexity to our code.</li>
+<li>Code. The code is written in one language / framework, and people have to either learn the language or not contribute at all (most students tended to choose the latter).</li>
+</ul>
 
-<p>What does this mean?</p>
+<p>So, we knew we had all of these issues, many of which sound familiar to anyone who has worked in the industry on legacy code. Our proposal to fix these issues was to redesign an application around a service oriented architecture (SOA).</p>
 
-<p>The system breaks down into two groups: clients and services. Every service (or microservice) can be thought of as a completely separate application running on a separate process. To prevent client (and service) developers to manage an ever-increasing list of services and their APIs, these microservices communicate to clients (and potentially other services) through an API Gateway. This gateway exposes all the services as a unified RESTful API while managing application level security, inter-service communication, and all routing of requests. These proves to be advantageous in several key areas:
-Services became much more simple. They manage one part of the website, and just that.
-Services can become replaceable and easier to recreate, update, or take out entirely.
-The API Gateway inherently serves as a documented, structured way of letting code maintainers know what routes are available from each service.</p>
+<h2 id="what-does-this-mean">What does this mean?</h2>
+
+<p>The system breaks down into two groups: clients and services. Every service (or microservice) can be thought of as a completely separate application running on a separate process. To prevent client (and service) developers to manage an ever-increasing list of services and their APIs, these microservices communicate to clients (and potentially other services) through an API Gateway. This gateway exposes all the services as a unified RESTful API while managing application level security, inter-service communication, and all routing of requests.</p>
+
+<p>This proves to be advantageous in several key areas:</p>
+
+<ol>
+<li>Services became much more simple. They manage one part of the website, and just that.</li>
+<li>Services can become replaceable and easier to recreate, update, or take out entirely.</li>
+<li>The API Gateway inherently serves as a documented, structured way of letting code maintainers know what routes are available from each service.</li>
+</ol>
+
+<p>This gateway became so important and central to our platform that we decided to open source it. Since it reminded us of branching out, we called it <a href="https://github.com/arbor-dev/arbor">Arbor</a>. Take a look at some sample code for registering a microservice in the framework:</p>
+
+<p><img src="/img/soa/code.jpg" alt="" /></p>
+
+<h2 id="links">Links</h2>
+
+<ul>
+<li>Link to the full whitepaper: <a href="/pdf/Groot Whitepaper.pdf">Project Groot, Designed to Be Replaced</a>.</li>
+<li>Link to the Go microservice framework that was developed: <a href="https://github.com/arbor-dev/arbor">arbor</a></li>
+</ul>
 
             </div>
         </article>
@@ -153,7 +174,7 @@ The API Gateway inherently serves as a documented, structured way of letting cod
 
         <div class="post-info">
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>368 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>432 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2017-03-30 19:00 -0500</p>
         </div>
@@ -168,7 +189,7 @@ The API Gateway inherently serves as a documented, structured way of letting cod
                 <div class="pagination__buttons">
                     
                         <span class="button previous">
-                            <a href="http://sameetandpotatoes.github.io/posts/implementing-program-status-scheduling-cask/">
+                            <a href="http://www.sameetsapra.com/posts/implementing-program-status-scheduling-cask/">
                                 <span class="button__icon">←</span>
                                 <span class="button__text">Implementing Program Status Scheduling at Cask</span>
                             </a>
@@ -177,7 +198,7 @@ The API Gateway inherently serves as a documented, structured way of letting cod
 
                     
                         <span class="button next">
-                            <a href="http://sameetandpotatoes.github.io/posts/summer-at-nextcapital/">
+                            <a href="http://www.sameetsapra.com/posts/summer-at-nextcapital/">
                                 <span class="button__text">Summer at NextCapital</span>
                                 <span class="button__icon">→</span>
                             </a>
@@ -199,7 +220,7 @@ The API Gateway inherently serves as a documented, structured way of letting cod
             <span>&copy; 2019</span>
             
             <span>Sameet Sapra</span>
-            <span> <a href="http://sameetandpotatoes.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            <span> <a href="http://www.sameetsapra.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
         </div>
     </div>
     <div class="footer__inner">
@@ -223,7 +244,7 @@ The API Gateway inherently serves as a documented, structured way of letting cod
 
 
 
-<script type="text/javascript" src="http://sameetandpotatoes.github.io/js/bundle.4b80fbbfab88198dcef181b034822e60a3e68b1c128d1dc05392a32943a18ec2f866fbcd9ce31dcf84134397161647ad605ea5c25ecf12e5fcf9d28b47e64bb5.js" integrity="sha512-S4D7v6uIGY3O8YGwNIIuYKPmixwSjR3AU5KjKUOhjsL4ZvvNnOMdz4QTQ5cWFketYF6lwl7PEuX8&#43;dKLR&#43;ZLtQ=="></script>
+<script type="text/javascript" src="http://www.sameetsapra.com/js/bundle.4b80fbbfab88198dcef181b034822e60a3e68b1c128d1dc05392a32943a18ec2f866fbcd9ce31dcf84134397161647ad605ea5c25ecf12e5fcf9d28b47e64bb5.js" integrity="sha512-S4D7v6uIGY3O8YGwNIIuYKPmixwSjR3AU5KjKUOhjsL4ZvvNnOMdz4QTQ5cWFketYF6lwl7PEuX8&#43;dKLR&#43;ZLtQ=="></script>
 
 
 

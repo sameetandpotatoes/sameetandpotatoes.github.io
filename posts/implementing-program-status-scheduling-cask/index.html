@@ -10,7 +10,7 @@
     content="As an intern at Cask this summer, I had the opportunity to work on Cask’s flagship product: CDAP. CDAP (Cask Data Application Platform) helps you build big-data applications on a layer of abstraction over a distributed environment. You can develop CDAP applications and test them locally on your computer, then package the application, and run it on a distributed environment. Basically, you can use Mapreduce, Spark, and take advantage of the resources of a cluster, while knowing almost nothing about a distributed environment." />
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://sameetandpotatoes.github.io/posts/implementing-program-status-scheduling-cask/" />
+<link rel="canonical" href="http://www.sameetsapra.com/posts/implementing-program-status-scheduling-cask/" />
 
 
 <title>
@@ -27,7 +27,7 @@
     type="text/css">
 
 
-<link rel="stylesheet" href="http://sameetandpotatoes.github.io/scss/main.min.099699ab246bf26f50616f7c9f00c79d46110459d1bd727b2d07d6fc09ece082.css">
+<link rel="stylesheet" href="http://www.sameetsapra.com/scss/main.min.099699ab246bf26f50616f7c9f00c79d46110459d1bd727b2d07d6fc09ece082.css">
 
 
 
@@ -44,7 +44,7 @@
 
 <meta itemprop="datePublished" content="2017-08-12T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-08-12T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="903">
+<meta itemprop="wordCount" content="932">
 
 
 
@@ -85,7 +85,7 @@
         <span class="header__right">
             
                 <nav class="menu">
-    <ul class="menu__inner"><li><a href="http://sameetandpotatoes.github.io/about">About</a></li><li><a href="http://sameetandpotatoes.github.io/posts">Posts</a></li><li><a href="http://sameetandpotatoes.github.io/work">Work</a></li>
+    <ul class="menu__inner"><li><a href="http://www.sameetsapra.com/about">About</a></li><li><a href="http://www.sameetsapra.com/posts">Posts</a></li><li><a href="http://www.sameetsapra.com/work">Work</a></li>
     </ul>
 </nav>
 
@@ -121,10 +121,10 @@
         </div>
 
         <article>
-            <h2 class="post-title"><a href="http://sameetandpotatoes.github.io/posts/implementing-program-status-scheduling-cask/">Implementing Program Status Scheduling at Cask</a></h2>
+            <h2 class="post-title"><a href="http://www.sameetsapra.com/posts/implementing-program-status-scheduling-cask/">Implementing Program Status Scheduling at Cask</a></h2>
 
             
-                <img src="/img/cask.jpg" class="post-cover" />
+                <img src="/img/cask/cask.jpg" class="post-cover" />
             
 
             <div class="post-content">
@@ -151,19 +151,29 @@ In other words, we were thinking of something like this:</p>
 - Remove it from the queue, check if any constraints on that schedule are satisfied (time of day, concurrent runs, etc).
 - Start the program when those constraints are satisfied, if they&rsquo;re satisfied.</p>
 
+<p>A big part of the design was understanding the entire lifecycle of a program on our platform. All that work was consolidated into a diagram like the one below:</p>
+
+<p><img src="/img/cask/state_diagram.png" alt="" /></p>
+
 <h3 id="the-problems">The Problems</h3>
 
-<p>But it wasn&rsquo;t that simple. We didn&rsquo;t have a way of sending notifications that a program was done. The design told us we needed to refactor first. The refactoring work served two purposes:
-We needed to unify how program states were recorded, so that program states accurately depict the correct state of the program. Remember that CDAP works both on a standalone computer and in a distributed environment - the lifecycle of programs is very different in both environments, and needed consistent states in all cases.
-We needed to use an internal transactional messaging system (think Kafka, but transactional/consistent, and durable in case services go down) to guarantee that these notifications would arrive exactly once, in order, and be visible to any internal part of CDAP. These notifications needed to be sent from anywhere in CDAP.</p>
+<p>But it wasn&rsquo;t that simple. We didn&rsquo;t have a way of sending notifications that a program was done. The design told us we needed to refactor first. The refactoring work served two purposes:</p>
+
+<ol>
+<li><p>We needed to unify how program states were recorded, so that program states accurately depict the correct state of the program. Remember that CDAP works both on a standalone computer and in a distributed environment - the lifecycle of programs is very different in both environments, and needed consistent states in all cases.</p></li>
+
+<li><p>We needed to use an internal transactional messaging system (think Kafka, but transactional/consistent, and durable in case services go down) to guarantee that these notifications would arrive exactly once, in order, and be visible to any internal part of CDAP. These notifications needed to be sent from anywhere in CDAP.</p></li>
+</ol>
 
 <h3 id="improving-program-state-recording">Improving program state recording:</h3>
 
 <p>Let me talk a bit about the refactoring work, which became a bit more involved than expected:</p>
 
-<p>Unifying program states was tricky. We needed a separate way of recording program states in local mode and in distributed mode. Local mode was relatively easy. Each program has a runner to run the program, and a controller. We simply add a listener to each controller to look for state changes, and react to those. In distributed mode, however, it was inconsistent and too late to respond there. We needed to record program states in the Application Master in distributed mode, which is responsible for handing out containers/resources to the programs. This is the most accurate and reasonable place where the program state for any program is known.
-Then, using a transactional messaging system to record program states was also more difficult than we thought, for other reasons. Publishing messages was easy, but consuming them efficiently was a bit more difficult. We needed to built a message fetcher that would consume notifications in batch and persist the program states transactionally. Once we did all that, we needed to fix all of the tests to correctly check for the program status, as these notifications were a cleaner, more reliable, but slightly slower way of updating program states.
-With notifications being published and consumed internally by the platform, it became much easier to implement the original goal and follow the diagram: scheduling programs.</p>
+<p>Unifying program states was tricky. We needed a separate way of recording program states in local mode and in distributed mode. Local mode was relatively easy. Each program has a runner to run the program, and a controller. We simply add a listener to each controller to look for state changes, and react to those. In distributed mode, however, it was inconsistent and too late to respond there. We needed to record program states in the Application Master in distributed mode, which is responsible for handing out containers/resources to the programs. This is the most accurate and reasonable place where the program state for any program is known.</p>
+
+<p>Then, using a transactional messaging system to record program states was also more difficult than we thought, for other reasons. Publishing messages was easy, but consuming them efficiently was a bit more difficult. We needed to built a message fetcher that would consume notifications in batch and persist the program states transactionally. Once we did all that, we needed to fix all of the tests to correctly check for the program status, as these notifications were a cleaner, more reliable, but slightly slower way of updating program states.</p>
+
+<p>With notifications being published and consumed internally by the platform, it became much easier to implement the original goal and follow the diagram: scheduling programs.</p>
 
 <p>At this point, a thread can subscribe to the topic on the messaging system and persist program state changes to the store. Scheduling can also subscribe to the same topic and schedule jobs.</p>
 
@@ -185,7 +195,7 @@ With notifications being published and consumed internally by the platform, it b
 
         <div class="post-info">
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>903 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>932 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2017-08-11 19:00 -0500</p>
         </div>
@@ -199,10 +209,17 @@ With notifications being published and consumed internally by the platform, it b
 
                 <div class="pagination__buttons">
                     
+                        <span class="button previous">
+                            <a href="http://www.sameetsapra.com/posts/last-year-at-uiuc/">
+                                <span class="button__icon">←</span>
+                                <span class="button__text">Reflecting on my last month in school</span>
+                            </a>
+                        </span>
+                    
 
                     
                         <span class="button next">
-                            <a href="http://sameetandpotatoes.github.io/posts/soa-made-simple/">
+                            <a href="http://www.sameetsapra.com/posts/soa-made-simple/">
                                 <span class="button__text">SOA made simple</span>
                                 <span class="button__icon">→</span>
                             </a>
@@ -224,7 +241,7 @@ With notifications being published and consumed internally by the platform, it b
             <span>&copy; 2019</span>
             
             <span>Sameet Sapra</span>
-            <span> <a href="http://sameetandpotatoes.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            <span> <a href="http://www.sameetsapra.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
         </div>
     </div>
     <div class="footer__inner">
@@ -248,7 +265,7 @@ With notifications being published and consumed internally by the platform, it b
 
 
 
-<script type="text/javascript" src="http://sameetandpotatoes.github.io/js/bundle.4b80fbbfab88198dcef181b034822e60a3e68b1c128d1dc05392a32943a18ec2f866fbcd9ce31dcf84134397161647ad605ea5c25ecf12e5fcf9d28b47e64bb5.js" integrity="sha512-S4D7v6uIGY3O8YGwNIIuYKPmixwSjR3AU5KjKUOhjsL4ZvvNnOMdz4QTQ5cWFketYF6lwl7PEuX8&#43;dKLR&#43;ZLtQ=="></script>
+<script type="text/javascript" src="http://www.sameetsapra.com/js/bundle.4b80fbbfab88198dcef181b034822e60a3e68b1c128d1dc05392a32943a18ec2f866fbcd9ce31dcf84134397161647ad605ea5c25ecf12e5fcf9d28b47e64bb5.js" integrity="sha512-S4D7v6uIGY3O8YGwNIIuYKPmixwSjR3AU5KjKUOhjsL4ZvvNnOMdz4QTQ5cWFketYF6lwl7PEuX8&#43;dKLR&#43;ZLtQ=="></script>
 
 
 
