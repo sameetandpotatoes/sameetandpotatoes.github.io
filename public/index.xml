@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sameet Sapra</title>
+    <link>/</link>
+    <description>Recent content on Sameet Sapra</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 19 Mar 2023 14:33:10 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>I got hacked - here’s my story and what I learned.</title>
+      <link>/posts/i-got-hacked/</link>
+      <pubDate>Sun, 19 Mar 2023 14:33:10 -0500</pubDate>
+      
+      <guid>/posts/i-got-hacked/</guid>
+      <description>I was visiting the NYC offices during the week of Feb 27 to meet some of my team in person. It was Friday, March 3, and I was spending it at the NYC office in Hudson Yards. Check out the view below! I was planning on enjoying part of my weekend in NYC before heading back to Chicago… little did I know what I&amp;rsquo;d be dealing with later that day.</description>
+      <content>&lt;p&gt;I was visiting the NYC offices during the week of Feb 27 to meet some of my team in person. It was Friday, March 3, and I was spending it at the NYC office in Hudson Yards. Check out the view below! I was planning on enjoying part of my weekend in NYC before heading back to Chicago… little did I know what I&amp;rsquo;d be dealing with later that day.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;IMG_3984.jpg&#34; alt=&#34;Alt image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;a-timeline-of-what-happened&#34;&gt;A timeline of what happened&lt;/h2&gt;
+&lt;p&gt;Around 2:55 pm, I received some phone calls from a 1-800–692–7753 number, claiming to be Apple. The phone call said that “someone had attempted to login to my Apple account. Press 1 to reject login”. While this call was happening, I googled the number and saw that it did in fact match Apple (In hindsight, it&amp;rsquo;s likely that this was not real, but I do not know the purpose of this call). Before I could really react and decide if I should press 1 or not, the number called me again. And again. And again. Probably 5-6 times over the course of 10 seconds. I found this to be pretty strange, but I ignored these phone calls.&lt;/p&gt;
+&lt;p&gt;Then, at 2:59 pm, I received several emails from Apple reporting that someone had logged into my iCloud, then another email saying someone had changed my trusted number, and finally one final email saying someone had changed the password on my iCloud account. Then, on my Mac and iPhone, I saw prompts telling me to sign in to my iCloud account once again. Someone signed me out of all my iCloud accounts.&lt;/p&gt;
+&lt;p&gt;Just a minute or two later, the Apple logo appears on my phone, and when I see the screen, it shows a “Set up as new iPhone” screen.&lt;/p&gt;
+&lt;p&gt;I was shocked.&lt;/p&gt;
+&lt;h2 id=&#34;what-i-did-immediately&#34;&gt;What I did immediately&lt;/h2&gt;
+&lt;p&gt;In fact, I was still wrapping up a meeting while all of this was happening. My mind was racing as I tried to figure out what immediate steps I should take.&lt;/p&gt;
+&lt;p&gt;First, I decided to get my phone set up again as a new phone, and then that’s when I only saw only one SIM card registered, my work device. See, I had a dual SIM setup on my phone, with my personal SIM installed as an eSIM on my work phone. This way, I could have two phone numbers attached to one phone and separate work from personal. eSIMs are also safer than physical SIMs. But I only saw one signal bar, not two, on my phone. I no longer had access to my personal phone number.&lt;/p&gt;
+&lt;p&gt;Putting that bombshell aside, I turned back to my computer and tried logging back in. I ended up triggering the reset iCloud password flow, only to be prompted by a trusted number that I didn’t recognize. I couldn’t reset my iCloud account, even though I had access to my email.&lt;/p&gt;
+&lt;p&gt;Then, I started thinking about this a bit more, and realized that my iCloud account has access to my keychain (which has all my uniquely generated passwords), my files, and all my photos. My files, which contain all of my personal information including tax information (SSN), as well as my photo collection of over 10+ years. All in the cloud. And now in the hands of someone else.&lt;/p&gt;
+&lt;p&gt;About 18 months ago, I decided to upgrade to 200 GB of shared storage in iCloud so that I could consolidate all my files and photos in iCloud so I could access them on all my Apple devices and not worry about things getting out of sync.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;But this means whoever has my iCloud account has access to all of this.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;After a few minutes of panicking, I realized I still had a local copy of my keychain, which included my passwords. I started looking through my keychain and started filtering through my financial accounts: bank accounts, retirement accounts, investment accounts, mortgage accounts. For each one, I had 2FA (two factor authentication). Some accounts used an app to verify myself, while other accounts use SMS. I tried logging in, but then realized that a 2FA code was just going to be sent to my phone number, which I didn’t have access to. Presumably, the person who compromised my iCloud account had my phone number, which meant they also intercepted any of my insecure SMS-based two factor authentication.&lt;/p&gt;
+&lt;p&gt;While this was happening, I received one more alarming email: someone logged into my mortgage account. My mortgage account had 2FA, so this validated my theory that my number received SMS messages that the attacker used to start logging into my accounts.&lt;/p&gt;
+&lt;p&gt;I called each of my financial accounts and explained the situation with the goal of changing the phone number on my account to my work number. Then, I logged into each of the accounts and changed the passwords to a new password, tracking my work in an Excel sheet&lt;/p&gt;
+&lt;p&gt;I also changed my social media account passwords, in case the attacker wanted to post anything on my socials. It was now a race between the attacker and myself to login to any of my accounts, since the iCloud keychain now was completely useless since it had been compromised and all the passwords can just be read in plaintext.&lt;/p&gt;
+&lt;p&gt;Next, I created accounts for all the major credit unions (TransUnion, Experian, Equifax) and started to place security freezes. At this point, it was starting to get late, they were closed, and I was losing momentum (and getting quite the migraine). I used their automated phone lines to place security freezes with just one of the unions, and made a mental note to call them tomorrow and/or confirm online that security freezes were placed. This seemed like one of the most important steps to take as soon as possible to prevent loans or other forms of credit from being opened under my name. At least it was a Friday though, and maybe less likely for action to be taken, compared to a weekday.&lt;/p&gt;
+&lt;p&gt;While rotating some of my most critical accounts’ passwords, I got on the phone with an Apple senior advisor and explained my situation (luckily I still had my work number to make phone calls). They told me that even though I have access to the email associated with my Apple ID, I could not use that to reset my password. This was weird to me because my account had 2FA - Apple should have sent 6 digit codes to all my devices upon an unrecognized login. Why didn’t I get that 2FA code on my devices? I’m still not sure. Almost any login flow on a website lets you reset your password with an email sent to you or by verifying your SSN or other sensitive PII.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Not Apple though. Everything seems to be tied to a trusted number.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Apple told me there was nothing they could do. The senior advisor was blunt and told me that my situation was dire, which was what I needed to hear at the time, though certainly frustrating. She said I could go to an Apple store, but I’d be wasting my time, and I could file a police report, but that probably wouldn’t go anywhere either. I’d have to create a new Apple ID and start over.&lt;/p&gt;
+&lt;p&gt;After debriefing the situation with immediate family and friends to explain the attack and warn them that my number was not available, I went to AT&amp;amp;T to regain access to my phone number. Luckily, they were able to do it without too much fuss, but of course, they did not seem to have any data on when/how the hack happened.&lt;/p&gt;
+&lt;h2 id=&#34;what-i-did-in-the-next-48-hours&#34;&gt;What I did in the next 48 hours&lt;/h2&gt;
+&lt;p&gt;The following day, I called the FBI hotline and placed a cybercrime report at ic3.gov.&lt;/p&gt;
+&lt;p&gt;I called the rest of the credit unions and made sure security freezes were placed on all my accounts.&lt;/p&gt;
+&lt;p&gt;I went to AT&amp;amp;T again to try to ask more direct questions: should I change my phone number (I probably should), what exactly happened to my account (they have 0 historical logs and can’t tell me anything), and was there a PIN set on my account (there was). They were unfortunately not much help here.&lt;/p&gt;
+&lt;p&gt;I also sent an email to Tim Cook, on the off chance that he responds and my story is heard there. Unfortunately, I haven&amp;rsquo;t received any response.&lt;/p&gt;
+&lt;h2 id=&#34;what-i-did-in-the-next-week&#34;&gt;What I did in the next week&lt;/h2&gt;
+&lt;p&gt;After flying back home, I talked with my family and decided to set up identity theft monitoring. Considering that it is likely that my family’s phone numbers were also used as part of my hack, we felt that it was better for us to all have monitoring to be safe. We did some research and ended up signing up with Aura.&lt;/p&gt;
+&lt;p&gt;I received a few more emails that were concerning on Thursday. My Apple ID was logged into another iPhone (different from the one that originally logged into my iCloud), the password was changed again, and Find My was disabled. I read those emails and came to the conclusion that my Apple ID was likely sold on the dark web to another interested buyer, and perhaps that my data was passing through the hands of another attacker. In fact, another super old bank account sent me alerts of unrecognized access.&lt;/p&gt;
+&lt;p&gt;This scared me a little bit, so then I decided that any single account of mine was still vulnerable. I went through the painstaking process of changing every single password on all my accounts. I also used this time to switch to Bitwarden, a free, open source password manager.&lt;/p&gt;
+&lt;p&gt;Out of an abundance of caution, I completely switched phone numbers (and carriers) too and rotated my credit card numbers as well.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;I basically changed every meaningful aspect of my digital life within the span of a week.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;was-i-able-to-recover-everything&#34;&gt;Was I able to recover everything?&lt;/h2&gt;
+&lt;p&gt;Even though my Mac was not signed into iCloud anymore, I could still view a lot of data locally from the cloud. I took all my contacts from the Contacts App and saved them into a .vcf file, and shared that with my new phone so I didn’t lose any of my contacts.&lt;/p&gt;
+&lt;p&gt;My keychain was still accessible, so I could see all my accounts and passwords. This was helpful as it gave me a list of accounts to track.&lt;/p&gt;
+&lt;p&gt;My photos were all recoverable in a Photos Library on my Mac. I took the files and saved them to my Downloads.&lt;/p&gt;
+&lt;p&gt;For my iCloud Drive, many of my files were cached and downloaded onto my local storage. I filtered through the files that were cached and saved them to a new folder. That way, when I signed out of my iCloud Drive, in case those files were gone, I still had the local copy.&lt;/p&gt;
+&lt;p&gt;But, all my iCloud backups were gone so I&amp;rsquo;ve had to set up each of my devices as brand new. I also lost any apps previously purchased on my Apple account, cash back from Apple credit card which I used to own, and any gift cards registered on my digital Apple Wallet too. My iMessage conversation history (and my WhatsApp messages, which were iCloud backed up) were also gone. I had a local copy of iMessage on my own Mac, but once I got a new phone number, I had to end up deleting all of those old messages to properly reset my group chats.&lt;/p&gt;
+&lt;p&gt;With respect to my Apple devices, they were all tied to my old Apple ID.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I could restore access to my iPad and my Apple Watch by submitting proof of purchase to Apple, which would help remove the activation lock.&lt;/li&gt;
+&lt;li&gt;For my AirPods Pro, I needed to factory reset it. Until I properly factory reset my AirPods Pro., the attacker who had my iCloud could see the location of the AirPods.&lt;/li&gt;
+&lt;li&gt;My AirTag was in my home when my iCloud was compromised. This means the attacker likely knows where I live because Find My shows all device locations.&lt;/li&gt;
+&lt;li&gt;My MagSafe Wallet could not be reset and was permanently tied to my old Apple ID. I had to throw it away.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;my-theory-as-to-what-happened&#34;&gt;My theory as to what happened&lt;/h2&gt;
+&lt;p&gt;In college, I read about social engineering attacks to compromise phone numbers. The way it works is an attacker gathers as much public information about the victim through previous leaks, public information scraped off of social media profiles, etc. Then, through persuasion, tactics, and having information on the account, the attacker gains the sympathy of the caller and asks to transfer the SIM of the account to their “new phone”.&lt;/p&gt;
+&lt;p&gt;I have no knowledge that this happened to me, but that’s the only way I know of an attack like this. Of course, if others know more, please share; I’d love to learn.&lt;/p&gt;
+&lt;p&gt;Despite all that, there’s still things that don’t add up.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Was the phone call I received from “Apple” real? Seems unlikely. Did this trigger an attack in some way then? I’m not sure. This wasn’t a phishing attack as I didn’t give away any information. Was the phone call made to my personal line? If so, then my point below doesn’t make sense.&lt;/li&gt;
+&lt;li&gt;I don’t know for how long my phone number was compromised. I assume it was compromised around 3 pm EST, but I wasn’t checking my phone very much so it could have been earlier. I know I received texts at the beginning of the day, at least until 12-1 pm.&lt;/li&gt;
+&lt;li&gt;I still don’t know exactly how my Apple ID got compromised. I had 2FA on (Apple did confirm this), I had a trusted number listed (which was my personal phone number), and my password was secure and not captured in any leaks as far as I know. It may have been re-used across one or two websites, but it seems like a stretch to presume that caused this to happen.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;how-to-better-protect-yourself--changes-i-plan-on-making&#34;&gt;How to better protect yourself / Changes I plan on making&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Add multiple trusted devices to your iCloud account and/or a Recovery Contact.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;a. This seems obvious but I don&amp;rsquo;t believe most people know this (I certainly didn’t). You can add multiple trusted devices and that means any of those numbers can still potentially have access to the account if any changes are made to it. This is similar to having Recovery Contact(s), which can also help in the case you can&amp;rsquo;t get access to your account. This should probably be mandatory as part of iCloud account creation. This one would have probably prevented this attack from happening, as I would have likely been able to use one of those other trusted numbers to regain access.&lt;/p&gt;
+&lt;p&gt;b. You can also turn on “Advanced Data Protection”, which will have end to end encryption on more of your iCloud data. Of course, this won’t necessarily save you if an unauthorized user gains access to your iCloud, as information can still be decrypted on the client side.&lt;/p&gt;
+&lt;p&gt;c. Don’t use SMS based 2FA for as many accounts as possible. If your phone number is compromised, this effectively becomes just an extra step for an attacker. Instead, use authenticator apps (I use Authy). These may not be foolproof either, but still, a big improvement over SMS based authentication.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Make sure that you have trusted pass phrases in place for your financial accounts.&lt;/strong&gt; For Schwab and Vanguard, I use the multi factor authentication which requires me to login to the app on my phone. For my mortgage and other important accounts, I have trusted phrases set up which should hopefully secure me further (though my 5th point is still good to think about).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Don’t re-use passwords across accounts&lt;/strong&gt;. This one is obvious, and I wasn’t doing this often either (especially not for my sensitive accounts). But, of course, I think the situation would have been far worse if I was reusing passwords. And I think it&amp;rsquo;s fair to say most people have one or two &amp;ldquo;insecure passwords&amp;rdquo; that they use as a default for their accounts they don&amp;rsquo;t care a lot about.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Be careful about the pin codes, usernames, and security questions you have out there.&lt;/strong&gt; It’s possible that the attacker used social engineering and public data from online about me. Maybe it’s worth recycling some of these answers. This is something I&amp;rsquo;ll be thinking about as well.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Don’t consolidate all your data. Have redundancy measures.&lt;/strong&gt; I’m changing my approach here and reverting my stance on cloud storage. While I likely would have been able to recover my data if everything was in Google and not Apple, I think it’s important to have local copies of your data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Reflecting on my last year at UIUC</title>
+      <link>/posts/last-year-at-uiuc/</link>
+      <pubDate>Fri, 10 May 2019 14:33:10 -0500</pubDate>
+      
+      <guid>/posts/last-year-at-uiuc/</guid>
+      <description>So I’ve finally reached the end of my four years here at the University of Illinois at Urbana-Champaign. I’ve certainly made a lot of memories here and I’ll be sad to see it all go.
+My last year on campus was spent doing a masters, and I wanted to reflect on that to also add my thoughts on completing a masters degree in computer science.
+Why did I do a masters?</description>
+      <content>&lt;p&gt;So I’ve finally reached the end of my four years here at the University of Illinois at Urbana-Champaign. I’ve certainly made a lot of memories here and I’ll be sad to see it all go.&lt;/p&gt;
+&lt;p&gt;My last year on campus was spent doing a masters, and I wanted to reflect on that to also add my thoughts on completing a masters degree in computer science.&lt;/p&gt;
+&lt;p&gt;Why did I do a masters?
+The most important distinction in my reason to get a masters was to merely have an extra year at school. See, I finished my Bachelors faster than the average degree because of high school credit. 3 years on campus felt too short, and I wanted to experience a variety of internships to have a better idea of what I wanted to do after college, hence a 1 year masters program (without research)&lt;/p&gt;
+&lt;p&gt;How were graduate level classes?
+I discovered soon after I started my masters that grad level courses (CS 5xx classes) were far more research-oriented than what I wanted. The average courseload is a lot easier and the grades were higher, but I didn’t feel like I learned many practical skills compared to my undergraduate years. It felt more like: read this paper, discuss some concepts around it, and rinse and repeat.&lt;/p&gt;
+&lt;p&gt;Now, I think part of the reason I felt this way is due to completing my masters degree at the same university as my bachelors. My mindset didn’t really have to adjust between years, and I knew almost everything about the school already so I knew what to expect.&lt;/p&gt;
+&lt;p&gt;Had I done a two year masters program at a different university, I believe I would have spent time adjusting to the new atmosphere and been overwhelmed (in a good way) by everything around me.&lt;/p&gt;
+&lt;p&gt;What’s a masters degree without research?
+That’s a good point. A really good point, in fact. The most important thing I realized during my masters is that classes are secondary to research. Classes, at least the ones I took, are meant to supplement your curiosity in that specific subfield of your focus area. They teach you how to read more papers and hone your analytical skills in extracting relevant information out of a complex study.&lt;/p&gt;
+&lt;p&gt;– TODO insert flow chart&lt;/p&gt;
+&lt;p&gt;TA vs RA
+If you aren’t doing research under a professor, the upside is you get to teach with a professor, under a teaching assistantship position. This was the most enjoyable part of my year on campus by far. I’ve already been interested in computer science, so teaching it to a group of students was the natural next step for me. I really enjoyed having the responsibility to help students by answering their questions, holding office hours, and teaching discussion sections.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Implementing Program Status Scheduling at Cask</title>
+      <link>/posts/implementing-program-status-scheduling-cask/</link>
+      <pubDate>Sun, 19 Aug 2018 14:33:10 -0500</pubDate>
+      
+      <guid>/posts/implementing-program-status-scheduling-cask/</guid>
+      <description>As an intern at Cask this summer, I had the opportunity to work on Cask&#39;s flagship product: CDAP. CDAP (Cask Data
+Application Platform) helps you build big-data applications on a layer of abstraction over a distributed environment.
+You can develop CDAP applications and test them locally on your computer, then package the application, and run it on a
+distributed environment. Basically, you can use Mapreduce, Spark, and take advantage of the resources of a cluster,</description>
+      <content>
+As an intern at Cask this summer, I had the opportunity to work on Cask&#39;s flagship product: CDAP. CDAP (Cask Data
+Application Platform) helps you build big-data applications on a layer of abstraction over a distributed environment.
+You can develop CDAP applications and test them locally on your computer, then package the application, and run it on a
+distributed environment. Basically, you can use Mapreduce, Spark, and take advantage of the resources of a cluster,
+while knowing almost nothing about a distributed environment. This summer, I implemented program status scheduling on
+the platform to allow users to trigger a programs based on the program status of another program, while passing event
+data between the program runs.
+
+## Use Case
+
+There are many use cases for this feature. By introducing program dependencies, we can, in turn, have smaller programs
+that focus on completing one part of a greater data application process. For instance, we can build a CDAP pipeline to
+download a feed from FTP and perform some initial pre-processing, storing it into a CDAP dataset. If this process
+succeeds, then we would like to run a Spark job to process the dataset and output it to an S3 bucket.
+
+With this feature, this process can be separated into two pipelines, where the Spark job processing pipeline can run
+after the FTP download completes, and only if the FTP download completes.
+
+## Designing
+
+One of the unique aspects of my internship at Cask was the design process. Design played a very central role on this
+project, and on all projects at Cask. I spent a lot of time understanding the current process of understanding the
+lifecycle of programs on CDAP in both a standalone and distributed environment, as well as how programs can be scheduled
+in other ways (by time, or by the arrival of a new partition on a dataset).
+
+After discussing the design with others, a core piece of the design was that all programs need to be notified of their
+program status. When saving the program status in storage, we should also see if there was a schedule created that
+depends on that program status. In other words, we were thinking of something like this:
+
+The high level approach (highly simplified) is pretty straightforward: - A notification arrives. - Check in a queue if
+it satisfies a schedule. - Remove it from the queue, check if any constraints on that schedule are satisfied (time of
+day, concurrent runs, etc). - Start the program when those constraints are satisfied, if they&#39;re satisfied.
+
+A big part of the design was understanding the entire lifecycle of a program on our platform. All that work was
+consolidated into a diagram like the one below:
+
+
+## The Problems
+
+But it wasn&#39;t that simple. We didn&#39;t have a way of sending notifications that a program was done. The design told us we
+needed to refactor first. The refactoring work served two purposes:
+
+We needed to unify how program states were recorded, so that program states accurately depict the correct state of the
+program. Remember that CDAP works both on a standalone computer and in a distributed environment - the lifecycle of
+programs is very different in both environments, and needed consistent states in all cases.
+
+We needed to use an internal transactional messaging system (think Kafka, but transactional/consistent, and durable in
+case services go down) to guarantee that these notifications would arrive exactly once, in order, and be visible to any
+internal part of CDAP. These notifications needed to be sent from anywhere in CDAP.
+
+Improving program state recording:
+Let me talk a bit about the refactoring work, which became a bit more involved than expected:
+
+Unifying program states was tricky. We needed a separate way of recording program states in local mode and in
+distributed mode. Local mode was relatively easy. Each program has a runner to run the program, and a controller. We
+simply add a listener to each controller to look for state changes, and react to those. In distributed mode, however, it
+was inconsistent and too late to respond there. We needed to record program states in the Application Master in
+distributed mode, which is responsible for handing out containers/resources to the programs. This is the most accurate
+and reasonable place where the program state for any program is known.
+
+Then, using a transactional messaging system to record program states was also more difficult than we thought, for other
+reasons. Publishing messages was easy, but consuming them efficiently was a bit more difficult. We needed to built a
+message fetcher that would consume notifications in batch and persist the program states transactionally. Once we did
+all that, we needed to fix all of the tests to correctly check for the program status, as these notifications were a
+cleaner, more reliable, but slightly slower way of updating program states.
+
+With notifications being published and consumed internally by the platform, it became much easier to implement the
+original goal and follow the diagram: scheduling programs.
+
+At this point, a thread can subscribe to the topic on the messaging system and persist program state changes to the
+store. Scheduling can also subscribe to the same topic and schedule jobs.
+
+## Conclusion
+
+I learned a lot at Cask, about all of the buzz words around big data, about design, about open source software. Dealing
+with a distributed environment with multi-threaded code and handling race conditions made this a much more challenging
+internship than, say, classic web-development. I definitely have a greater appreciation for Java now.
+
+Check out my design docs I made:
+
+Program status scheduling: https://wiki.cask.co/display/CE/Program+Status+Based+Scheduling
+Refining program states: https://wiki.cask.co/display/CE/Refined+Program+States
+</content>
+    </item>
+    
+    <item>
+      <title>SOA Made Simple</title>
+      <link>/posts/soa-made-simple/</link>
+      <pubDate>Thu, 30 Mar 2017 14:33:10 -0500</pubDate>
+      
+      <guid>/posts/soa-made-simple/</guid>
+      <description>Over the past two semesters, in the midst of learning algorithms, artificial intelligence search and probabilistic reasoning, low level C systems programming, and a whole lot more (10 classes, 8 CS, 2 STATS), I also got involved in an entirely unexpected open source venture: Arbor.
+But first, let’s talk about Project Groot. Project Groot is a venture by UIUC’s Association for Computing Machinery (ACM) to rebuild our organization’s website. Now, there were several issues we had long identified and complained about with the old system:</description>
+      <content>&lt;p&gt;Over the past two semesters, in the midst of learning algorithms, artificial intelligence search and probabilistic reasoning, low level C systems programming, and a whole lot more (10 classes, 8 CS, 2 STATS), I also got involved in an entirely unexpected open source venture: Arbor.&lt;/p&gt;
+&lt;p&gt;But first, let’s talk about Project Groot. Project Groot is a venture by UIUC’s Association for Computing Machinery (ACM) to rebuild our organization’s website. Now, there were several issues we had long identified and complained about with the old system:&lt;/p&gt;
+&lt;p&gt;Hard to maintain. There was a massive, monolithic codebase that was written by a few students who had long graduated, so nobody knew how to maintain it anymore.
+Scalability issues. If we wanted to add a new feature, it required a lot of planning, debugging, and understanding the architecture
+Outdated. There were a bunch of outdated features that were adding a lot of unnecessary complexity to our code.
+Code. The code is written in one language / framework, and people have to either learn the language or not contribute at all (most students tended to choose the latter).
+So, we knew we had all of these issues, many of which sound familiar to anyone who has worked in the industry on legacy code. Our proposal to fix these issues was to redesign an application around a service oriented architecture (SOA).&lt;/p&gt;
+&lt;p&gt;What does this mean?
+The system breaks down into two groups: clients and services. Every service (or microservice) can be thought of as a completely separate application running on a separate process. To prevent client (and service) developers to manage an ever-increasing list of services and their APIs, these microservices communicate to clients (and potentially other services) through an API Gateway. This gateway exposes all the services as a unified RESTful API while managing application level security, inter-service communication, and all routing of requests.&lt;/p&gt;
+&lt;p&gt;This proves to be advantageous in several key areas:&lt;/p&gt;
+&lt;p&gt;Services became much more simple. They manage one part of the website, and just that.
+Services can become replaceable and easier to recreate, update, or take out entirely.
+The API Gateway inherently serves as a documented, structured way of letting code maintainers know what routes are available from each service.
+This gateway became so important and central to our platform that we decided to open source it. Since it reminded us of branching out, we called it Arbor. Take a look at some sample code for registering a microservice in the framework:&lt;/p&gt;
+&lt;p&gt;Links
+Link to the full whitepaper: Project Groot, Designed to Be Replaced.
+Link to the Go microservice framework that was developed: arbor&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Summer at NextCapital</title>
+      <link>/posts/summer-at-nextcapital/</link>
+      <pubDate>Sat, 06 Feb 2016 14:33:10 -0500</pubDate>
+      
+      <guid>/posts/summer-at-nextcapital/</guid>
+      <description>I started my freshman year of Computer Science at UIUC this past fall, and in the past five months I’ve been on campus, I really enjoy every moment I’m there.
+The biggest difference I’ve noticed between high school classes and college classes is depth. The material that you learn in college is so much more interesting because the course focuses on a more specific topic within that field of study. Take quantum mechanics.</description>
+      <content>&lt;p&gt;I started my freshman year of Computer Science at UIUC this past fall, and in the past five months I’ve been on campus, I really enjoy every moment I’m there.&lt;/p&gt;
+&lt;p&gt;The biggest difference I’ve noticed between high school classes and college classes is depth. The material that you learn in college is so much more interesting because the course focuses on a more specific topic within that field of study. Take quantum mechanics. This is a class where we learn one of the fundamental oddities of the quantum world: how two things can exist in two different states at the same time. College courses allow me to experience the full depth of the material because of the time we can put into classes.&lt;/p&gt;
+&lt;p&gt;Outside of class, I’ve also gotten a job as a full stack web developer for the Cognitive Computation Group. This has also been a very enjoyable experience for me as I take a step back from so many web development frameworks and start from the basics, like PHP. I’ve also had the opportunity to learn more about server configuration and the issues that can go along with that.&lt;/p&gt;
+&lt;p&gt;UIUC was filled with career fairs, technical interviews, and free t-shirts. I talked to a lot of companies, handed out a lot of resumes, and got a lot of free swag in return. There were so many events and opportunities hosted by the student computer science organizations on campus to help look over resumes or prepare for technical interviews.&lt;/p&gt;
+&lt;p&gt;I’m excited to announce that I will be working at NextCapital in Chicago this coming summer as a full stack web developer. NextCapital helps both consumers and partners track their money, classifying their assets by bringing all of their accounts in one place.&lt;/p&gt;
+&lt;p&gt;My goals at this company are to continue getting experience in the real world by taking business requirements and transforming them into technology solutions. I hope to gain more confidence by writing and testing good code and pushing it into production, where real consumers can benefit from my code.&lt;/p&gt;
+&lt;p&gt;I hope I can take what I’m learning, data structures and computer architecture, and begin to apply it to the real world.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>React &#43; Flux &#43; Backbone = Fluxbone!</title>
+      <link>/posts/react-and-flux/</link>
+      <pubDate>Thu, 09 Jul 2015 14:33:10 -0500</pubDate>
+      
+      <guid>/posts/react-and-flux/</guid>
+      <description>This summer I’ve been interning at SimpleRelevance as a front end engineer. SimpleRelevance is a recommendation engine that uses machine learning and predictive analytics to enhance the digital marketing of other companies.
+Aside from mobile responsiveness, snappy AJAX forms, and some WordPress database migrations, one of my bigger projects has been rebuilding the website dashboard that presents key data to clients regarding how SimpleRelevance’s personalized marketing is generating more revenue and customer activity for clients.</description>
+      <content>&lt;p&gt;This summer I’ve been interning at SimpleRelevance as a front end engineer. SimpleRelevance is a recommendation engine that uses machine learning and predictive analytics to enhance the digital marketing of other companies.&lt;/p&gt;
+&lt;p&gt;Aside from mobile responsiveness, snappy AJAX forms, and some WordPress database migrations, one of my bigger projects has been rebuilding the website dashboard that presents key data to clients regarding how SimpleRelevance’s personalized marketing is generating more revenue and customer activity for clients. You can print and download graphs and charts, search through users and view their recommended items, and filter items by their attributes.&lt;/p&gt;
+&lt;p&gt;The original dashboard was written in Backbone.JS, a popular JavaScript framework, but it took only one look at the code before I knew that I had to rewrite it. There was reused code everywhere, and comments in almost every controller warning, and even apologizing, to the reader about the many “code hacks”. And frankly, it was slow.&lt;/p&gt;
+&lt;p&gt;I was encouraged to look at React.JS instead, a JavaScript library specialized for user interfaces. React keeps track of two DOMs. Whenever it has to render the view, it compares changes between the two DOMs and only renders the changes from the virtual to the shadow DOM. In other words, React’s speed really shines when the website constantly updates the DOM, because it’s much faster than other methods that rerender the entire view. React is great for reusing code, and this works best when the app can be organized in a tree layout, with children as descendent React classes.&lt;/p&gt;
+&lt;p&gt;But wait, React only functions as the V in MVC. We still need Backbone for the models and collections. But with React, we can implement Backbone more effectively.&lt;/p&gt;
+&lt;p&gt;Part of the issue before was that data was mutating everywhere, and there were “little hacks” in place as part of laziness to write more code. React JS has its own solution. React JS is coupled with Flux, an architecture that emphasizes unidirectional data flow. Instead of models, views, and controllers, Flux has actions, dispatchers, stores, and views. Actions are triggered by interactions with the view. Actions invoke a dispatcher, which acts as a central hub that broadcasts payloads to register callbacks. Stores handle the changes in data and the actions and updating the store’s state. The store emits a change event so that React knows it has to re render the view.&lt;/p&gt;
+&lt;p&gt;Wait, so where does Backbone come in? Well, in integrating React and Backbone, the Backbone collection becomes the Flux store. In other words, the state of a component in React becomes the Backbone collection for that component.&lt;/p&gt;
+&lt;p&gt;Pretty cool, huh?&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Power of POW</title>
+      <link>/posts/power-of-pow/</link>
+      <pubDate>Thu, 31 Jul 2014 14:33:10 -0500</pubDate>
+      
+      <guid>/posts/power-of-pow/</guid>
+      <description>Many developers have heard of services like forwardhq to share their localhost with collaborators or for mobile testing. Yet many of them don’t even know that Pow, a Rack server for OS X, allows you to do that for free. Setting it up is so simple, and you can just symlink your Rails directories to ~/.pow
+For local development, you simply head to http://myapp.dev
+This is good for testing apps locally, as you don’t even have to start the Rails server for your app.</description>
+      <content>&lt;p&gt;Many developers have heard of services like forwardhq to share their localhost with collaborators or for mobile testing. Yet many of them don’t even know that Pow, a Rack server for OS X, allows you to do that for free. Setting it up is so simple, and you can just symlink your Rails directories to ~/.pow&lt;/p&gt;
+&lt;p&gt;For local development, you simply head to &lt;a href=&#34;http://myapp.dev&#34;&gt;http://myapp.dev&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is good for testing apps locally, as you don’t even have to start the Rails server for your app. You simply head to the URL, and it just works. However, as Pow is a Rack server, it can host your app and share it, so you can also access it at: &lt;a href=&#34;http://myapp.localipaddress.xip.io:20559&#34;&gt;http://myapp.localipaddress.xip.io:20559&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Why is this better? Well, you can also navigate to the above URL on your iPad, an iPhone Simulator, to test your app on mobile devices without pushing it up to Heroku. And it’s instant. Make a change in your Rails app and you can see the change straight away on your device.&lt;/p&gt;
+&lt;p&gt;Pow is awesome.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Raspberry Pi: A $30 AppleTV</title>
+      <link>/posts/raspberrypi/</link>
+      <pubDate>Thu, 30 Jan 2014 14:33:10 -0500</pubDate>
+      
+      <guid>/posts/raspberrypi/</guid>
+      <description>Tired of Apple’s constraints on all of its hardware? Have $30 dollars to spare? If so, you may want to consider buying yourself a shiny new Raspberry Pi and installing Raspbmc to set up your own Apple TV. Here’s what you need to get started:
+Raspberry Pi w/ 4 GB minimum SD card HDMI Cable Ethernet Connection (optional but recommended) Simply connect the SD Card, install the highly configurable OS, and load it onto your Raspberry Pi for wireless streaming among all of your iOS devices.</description>
+      <content>&lt;p&gt;Tired of Apple’s constraints on all of its hardware? Have $30 dollars to spare? If so, you may want to consider buying yourself a shiny new Raspberry Pi and installing Raspbmc to set up your own Apple TV. Here’s what you need to get started:&lt;/p&gt;
+&lt;p&gt;Raspberry Pi w/ 4 GB minimum SD card
+HDMI Cable
+Ethernet Connection (optional but recommended)
+Simply connect the SD Card, install the highly configurable OS, and load it onto your Raspberry Pi for wireless streaming among all of your iOS devices. You can buy a homeplug that allows you to use wired connection through the electrical outlets in your home, or just opt for wireless connection (only recommended if you have Google Fiber). This Linux computer allows you to view photos from your iPad Mini, use the TV as an additional monitor from your Macbook Pro, or simply play music from your iPhone 5S.&lt;/p&gt;
+&lt;p&gt;And, of course, if something like this can work for Apple devices, you know there’s gotta be a way to do it on Android, too. One of the many Google Play store apps can enable similar functionality for Android.&lt;/p&gt;
+&lt;p&gt;Happy watching!&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>A Mini Introduction to Linux Servers</title>
+      <link>/posts/linux-server/</link>
+      <pubDate>Thu, 12 Dec 2013 14:33:10 -0500</pubDate>
+      
+      <guid>/posts/linux-server/</guid>
+      <description>Linux is a wonderful operating system, full of features for everyone to tinker with. With a Linux server, you are essentially expanding these features into your intranet (yes intranet), to wirelessly stream to every device in your home, to host web servers, and more. Here’s how I set mine up:
+Download and install a Linux distro. I picked Ubuntu (12.04 at the time) for its ease of installation, but you can just as easily pick Fedora, Debian, or go for a pure command line approach with a distro such as Gentoo.</description>
+      <content>&lt;p&gt;Linux is a wonderful operating system, full of features for everyone to tinker with. With a Linux server, you are essentially expanding these features into your intranet (yes intranet), to wirelessly stream to every device in your home, to host web servers, and more. Here’s how I set mine up:&lt;/p&gt;
+&lt;p&gt;Download and install a Linux distro. I picked Ubuntu (12.04 at the time) for its ease of installation, but you can just as easily pick Fedora, Debian, or go for a pure command line approach with a distro such as Gentoo.&lt;/p&gt;
+&lt;p&gt;To access it from another computer, install ssh, and allow screen sharing. With these steps, you can now manage your server from another computer. All you need for the fastest server possible (besides SSD’s hooked up in Raid 0 of course) is an Ethernet connection from your server to your router.&lt;/p&gt;
+&lt;p&gt;On your router configuration page, choose a static IP Address. It’s extremely important to do this so that your router chooses the same IP Address every time your server turns on.&lt;/p&gt;
+&lt;p&gt;If you are using the Linux server for file sharing and remote downloading, you probably want to mount a drive and sharing it in your intranet. This part can be tricky if you have more than one physical hard drive in your system and you want to maximize space. In this case, you need to look into Logical Volume Manager (LVM). With this, I was able to “trick” Linux into thinking my two 250 GB hard drives were one 500 GB hard drive. I wanted to do this because I wanted to combine my total storage into one drive.&lt;/p&gt;
+&lt;p&gt;With your now maximized space, to share your network drive, you need to install Samba File Server. When installing Samba, make sure you specify that all users can read and write to the network drive without a password. In other words, unless you explicitly want a password on your network drive, you should allow anyone to add files to it.&lt;/p&gt;
+&lt;p&gt;If you want to be able to access your content from anywhere in the world, you need to set up an Apache web server (by installing and specifying your network drive as the root folder). Then, on your router’s configuration page, you need to open the port that the Apache web server is running on (80 for http; 443 for https). Be warned: you need to specify a password for the Apache web server, otherwise anyone from around the world can download your content if they have your public IP address.&lt;/p&gt;
+&lt;p&gt;Some tools you may want to consider for your new Linux server:&lt;/p&gt;
+&lt;p&gt;Air PlayIt Server: With the compatible iPad/iPhone app, your Linux server can “serve” those Apple products.
+PS3MediaServer: Just as the name says, your PS3 can also recognize the Linux server and wirelessly stream to it.
+Wake On Lan: With WOL enabled in your computer’s BIOS, an iPhone app, such as mWOL, can wake up your server from the touch of a button. Obviously, you need to be on the same network as the server. You can even set this up to be automated, so that your server wakes up at 9:00 AM every day, ready to stream.
+And that’s it! This setup worked pretty well for me to remotely download and serve all sorts of content directly from the server.&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>
