@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+
+const description =
+  'All posts by Sameet Sapra, 2017–2023, plus the pre-2017 archive.';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Everything before 2017 is grouped as the archive; every post stays reachable.
+const archiveCutoff = new Date('2017-01-01T00:00:00Z');
+const recent = posts.filter((p) => p.data.pubDate >= archiveCutoff);
+const archive = posts.filter((p) => p.data.pubDate < archiveCutoff);
+---
+
+<BaseLayout title="Posts" description={description}>
+  <h1>Posts</h1>
+  <PostList posts={recent} />
+
+  {
+    archive.length > 0 && (
+      <section>
+        <h2>From the archive</h2>
+        <PostList posts={archive} archive />
+      </section>
+    )
+  }
+</BaseLayout>

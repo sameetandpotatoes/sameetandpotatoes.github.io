@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+  archive?: boolean;
+}
+
+const { posts, archive = false } = Astro.props;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+---
+
+<ul class:list={['post-list', { 'post-list--archive': archive }]}>
+  {
+    posts.map((post) => (
+      <li>
+        <a class="post-title" href={`/posts/${post.id}/`}>
+          {post.data.title}
+        </a>
+        <div class="post-meta">{fmt(post.data.pubDate)}</div>
+        <p class="post-desc">{post.data.description}</p>
+      </li>
+    ))
+  }
+</ul>

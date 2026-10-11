@@ -1,0 +1,454 @@
+/* Sameet Sapra — personal site.
+   Warm paper, minimal and airy. Self-hosted variable fonts (Fontsource):
+   Fraunces (display serif, optical sizing on) + Inter (body/UI). */
+
+:root {
+  --paper: #faf7f2;
+  --paper-raised: #fffdf9;
+  --ink: #262019;
+  --ink-soft: #575046;
+  --ink-faint: #8a8072;
+  --accent: #9a3f26;
+  --accent-soft: #b5563a;
+  --rule: #e8e1d1;
+  --code-bg: #f0e9dc;
+
+  --font-body: "Inter Variable", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+strong {
+  font-weight: 600;
+}
+
+::selection {
+  background: #f2d8a7;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--accent-soft);
+  text-decoration-color: currentColor;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- Layout shell ---------- */
+
+.wrap {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.measure {
+  max-width: 44rem;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.site-title {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-size: 1.08rem;
+  font-weight: 540;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.site-title:hover {
+  color: var(--accent);
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.6rem;
+  font-size: 0.92rem;
+}
+
+.site-nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  color: var(--accent);
+}
+
+main {
+  padding: 4rem 0 6rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding: 1.6rem 0 2.4rem;
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+}
+
+.site-footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.site-footer a {
+  color: var(--ink-soft);
+}
+
+/* ---------- Type ---------- */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 520;
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+h1 {
+  font-size: 1.9rem;
+  margin: 0 0 1.1rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+  margin: 4.2rem 0 1.1rem;
+}
+
+h3 {
+  font-size: 1.08rem;
+  font-weight: 560;
+  margin: 2.2rem 0 0.6rem;
+}
+
+.section-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.4rem;
+}
+
+/* ---------- Prose (rendered markdown) ---------- */
+
+.prose > *:first-child {
+  margin-top: 0;
+}
+
+.prose p {
+  margin: 0 0 1.15rem;
+}
+
+.prose ul,
+.prose ol {
+  margin: 0 0 1.15rem;
+  padding-left: 1.4rem;
+}
+
+.prose li {
+  margin-bottom: 0.35rem;
+}
+
+.prose a {
+  overflow-wrap: anywhere;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--code-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+.prose pre {
+  background: #2b2620;
+  color: #f3ead8;
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0 0 1.3rem;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+.prose blockquote {
+  margin: 0 0 1.3rem;
+  padding: 0.2rem 0 0.2rem 1.1rem;
+  border-left: 3px solid var(--rule);
+  color: var(--ink-soft);
+}
+
+.prose img {
+  border-radius: 8px;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2.2rem 0;
+}
+
+/* ---------- Home hero ---------- */
+
+.hero {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.hero-photo {
+  flex: 0 0 auto;
+}
+
+.hero-photo img {
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgb(38 32 25 / 0.14);
+}
+
+.hero-text p {
+  color: var(--ink-soft);
+  font-size: 1.03rem;
+  margin: 0 0 1rem;
+  max-width: 36rem;
+}
+
+.hero-text p strong {
+  color: var(--ink);
+}
+
+.hero-links {
+  margin-top: 1.2rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  main {
+    padding-top: 2.6rem;
+  }
+}
+
+/* ---------- Post lists ---------- */
+
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-list li {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.post-list li:last-child {
+  border-bottom: none;
+}
+
+.post-list .post-title {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-size: 1.1rem;
+  font-weight: 540;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1.3;
+  display: inline-block;
+}
+
+.post-list .post-title:hover {
+  color: var(--accent);
+}
+
+.post-meta {
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  margin-top: 0.15rem;
+}
+
+.post-desc {
+  color: var(--ink-soft);
+  margin: 0.4rem 0 0;
+  max-width: 42rem;
+}
+
+.post-list--archive .post-title {
+  font-size: 1rem;
+}
+
+/* ---------- Publications ---------- */
+
+.pub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pub-list li {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.pub-list li:last-child {
+  border-bottom: none;
+}
+
+.pub-title {
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.pub-title:hover {
+  color: var(--accent);
+}
+
+.pub-venue {
+  color: var(--ink-faint);
+  font-size: 0.93rem;
+}
+
+/* ---------- Post page ---------- */
+
+.post-header {
+  margin-bottom: 2rem;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+}
+
+.tag-list li {
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.14rem 0.65rem;
+}
+
+.post-footer-nav {
+  margin-top: 3rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------- Eating (favorite places) ---------- */
+
+.place-list {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+}
+
+.place-list li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.place-list li:last-child {
+  border-bottom: none;
+}
+
+.place-name {
+  font-weight: 550;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.place-name:hover {
+  color: var(--accent);
+}
+
+.place-addr {
+  color: var(--ink-faint);
+  font-size: 0.93rem;
+  margin-top: 0.1rem;
+}
+
+/* Embedded Google Map (third-party iframe; the site's one external
+   embed — typefaces and everything else remain self-hosted). */
+
+.map-embed {
+  margin: 1.6rem 0 0;
+}
+
+.map-embed iframe {
+  display: block;
+  width: 100%;
+  height: 320px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--paper-raised);
+}
+
+.map-embed figcaption {
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+  margin-top: 0.45rem;
+}

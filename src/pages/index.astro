@@ -1,0 +1,189 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import portraitHero from '../assets/portrait-hero.jpg';
+
+const description =
+  'Sameet Sapra is a software engineer based in Chicago. B.S. and M.C.S. in Computer Science, University of Illinois Urbana-Champaign, Class of 2019. Writing, projects, and published work.';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const selectedSlugs = ['i-got-hacked', 'last-year-at-uiuc', 'soa-made-simple'];
+const selected = selectedSlugs
+  .map((slug) => posts.find((p) => p.id === slug))
+  .filter((p) => p !== undefined);
+
+const publications = [
+  {
+    title: 'Scalable data classification for security and privacy',
+    venue: 'Engineering at Meta',
+    date: 'July 21, 2020',
+    href: 'https://engineering.fb.com/2020/07/21/security/data-classification-system/',
+  },
+  {
+    title: 'Scalable Data Classification for Security and Privacy',
+    venue: 'arXiv:2006.14109',
+    date: '2020',
+    href: 'https://doi.org/10.48550/arXiv.2006.14109',
+  },
+  {
+    title: 'Data-Driven Approach to Picking the Most Optimal Classification Algorithm',
+    venue: 'Illinois Data Science Initiative technical report',
+    date: 'June 26, 2017',
+    href: '/about/',
+  },
+  {
+    title: 'Groot poster, Engineering Open House 2017',
+    venue: 'ACM at UIUC',
+    date: 'March 10–11, 2017',
+    href: 'https://github.com/acm-uiuc/publications/blob/HEAD/Groot_EOH2017_Poster/README.md',
+  },
+];
+
+// Favorite places in Chicago. Names and addresses are from my own
+// restaurant records; each card links to its Google Maps listing.
+const mapsSearch = (q: string) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+
+const favorites = [
+  {
+    name: 'City Skyline Chicago - Coffee Lounge',
+    address: '4755 N Lincoln Ave, Chicago',
+  },
+  {
+    name: 'Sojourn Cocktail Lounge',
+    address: '4620 N Lincoln Ave, Chicago',
+  },
+  {
+    name: 'Asador Bastian',
+    address: '214 W Erie St, Chicago',
+  },
+  {
+    name: 'Nova Greek Frozen Yogurt',
+    address: '1047 W Madison St, Chicago',
+  },
+  {
+    name: 'Discourse Coffee',
+    address: '952 W Fulton St, Chicago',
+  },
+  {
+    name: 'Steingold’s of Chicago',
+    address: '3737 N Southport Ave, Chicago',
+  },
+].map((f) => ({ ...f, mapsUrl: mapsSearch(`${f.name}, Chicago, IL`) }));
+
+const mapsProfile = 'https://www.google.com/maps/contrib/105385626946375251916';
+
+// Keyless Google Maps embed (an iframe, not JavaScript) showing one of
+// the favorites — Asador Bastian, downtown. The cards above link to all six.
+const embedPlace = 'Asador Bastian, 214 W Erie St, Chicago, IL';
+const embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(embedPlace)}&output=embed`;
+---
+
+<BaseLayout title="Sameet Sapra" description={description}>
+  <section class="hero">
+    <div class="hero-photo">
+      <Image
+        src={portraitHero}
+        alt="Sameet Sapra outdoors in autumn, red maple foliage behind him"
+        width={440}
+        widths={[220, 440, 660]}
+        sizes="220px"
+        format="webp"
+        quality={82}
+        loading="eager"
+      />
+    </div>
+    <div class="hero-text">
+      <h1>Hi, I'm Sameet.</h1>
+      <p>
+        I'm a <strong>software engineer</strong> based in Chicago. I studied
+        Computer Science at the University of Illinois Urbana-Champaign —
+        B.S. and M.C.S., Class of 2019, with a minor in Mathematical
+        Statistics.
+      </p>
+      <p>
+        This site is my corner of the internet: occasional writing, older
+        projects, and links to my published work. These days I'm building
+        software, following what's new in AI, and getting to know Chicago
+        better.
+      </p>
+      <p class="hero-links">
+        <a href="/about/">More about me →</a> · <a
+          href="mailto:sameetandpotatoes@gmail.com">Get in touch →</a
+        >
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Selected writing</h2>
+    <PostList posts={selected} />
+  </section>
+
+  <section>
+    <h2>Published work</h2>
+    <ul class="pub-list">
+      {
+        publications.map((pub) => (
+          <li>
+            <a class="pub-title" href={pub.href}>
+              {pub.title}
+            </a>
+            <div class="pub-venue">
+              {pub.venue} · {pub.date}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+    <p><a href="/about/">All published work and profiles →</a></p>
+  </section>
+
+  <section class="measure">
+    <h2>Eating</h2>
+    <p>
+      I eat out often in Chicago and review most places I visit on Google
+      Maps, where I'm a Level 8 Local Guide.
+    </p>
+    <p>A few favorites:</p>
+    <ul class="place-list">
+      {
+        favorites.map((fav) => (
+          <li>
+            <a class="place-name" href={fav.mapsUrl}>
+              {fav.name}
+            </a>
+            <div class="place-addr">{fav.address}</div>
+          </li>
+        ))
+      }
+    </ul>
+    <p>
+      All of my reviews are on my <a href={mapsProfile}>Google Maps profile</a>.
+    </p>
+    <figure class="map-embed">
+      <iframe
+        src={embedSrc}
+        title="Google Map: Asador Bastian, 214 W Erie St, Chicago"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <figcaption>Map: Asador Bastian, 214 W Erie St.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>All writing</h2>
+    <PostList posts={posts} />
+    <p><a href="/posts/">Browse the full archive →</a></p>
+    <p>
+      Food, coffee, watches, and the rest of life outside work are covered
+      briefly on the <a href="/about/">About page</a>.
+    </p>
+  </section>
+</BaseLayout>
