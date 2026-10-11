@@ -44,44 +44,53 @@ const publications = [
   },
 ];
 
-// Favorite places in Chicago. Names and addresses are from my own
-// restaurant records; each card links to its Google Maps listing.
+// Favorite places in Chicago — his top Beli-ranked restaurants that he
+// also rated five stars on Google Maps. All data (Beli score, Google
+// stars, review text + date, address) is his own, from
+// src/data/favorites.json (generated from his Beli rankings export and
+// his Google Maps review records; nothing invented).
+import favoritesData from '../data/favorites.json';
+
 const mapsSearch = (q: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+const embedUrl = (q: string) =>
+  `https://www.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
 
-const favorites = [
-  {
-    name: 'City Skyline Chicago - Coffee Lounge',
-    address: '4755 N Lincoln Ave, Chicago',
-  },
-  {
-    name: 'Sojourn Cocktail Lounge',
-    address: '4620 N Lincoln Ave, Chicago',
-  },
-  {
-    name: 'Asador Bastian',
-    address: '214 W Erie St, Chicago',
-  },
-  {
-    name: 'Nova Greek Frozen Yogurt',
-    address: '1047 W Madison St, Chicago',
-  },
-  {
-    name: 'Discourse Coffee',
-    address: '952 W Fulton St, Chicago',
-  },
-  {
-    name: 'Steingold’s of Chicago',
-    address: '3737 N Southport Ave, Chicago',
-  },
-].map((f) => ({ ...f, mapsUrl: mapsSearch(`${f.name}, Chicago, IL`) }));
+const flatText = (t: string) => t.replace(/\s+/g, ' ').trim();
+const makeExcerpt = (t: string, max = 200) => {
+  const flat = flatText(t);
+  if (flat.length <= max) return flat;
+  const cut = flat.slice(0, max);
+  return cut.slice(0, cut.lastIndexOf(' ')) + '…';
+};
+
+const favorites = favoritesData.map((f) => ({
+  ...f,
+  street: f.address.split(',')[0],
+  mapsUrl: mapsSearch(f.mapsQuery),
+  embedSrc: embedUrl(f.embedQuery),
+  starsLabel: '★'.repeat(f.stars),
+  excerpt: makeExcerpt(f.review),
+  hasMore: flatText(f.review).length > makeExcerpt(f.review).length,
+}));
+const defaultFav = favorites[0];
+
+// Payload for the small inline enhancement script below (selecting a
+// card swaps the map + review). Escaped so no review text can break
+// out of the JSON script block.
+const favPayload = JSON.stringify(
+  favorites.map((f) => ({
+    name: f.name,
+    street: f.street,
+    embedSrc: f.embedSrc,
+    dateLabel: f.dateLabel,
+    excerpt: f.excerpt,
+    review: f.review,
+    hasMore: f.hasMore,
+  })),
+).replace(/</g, '\\u003c');
 
 const mapsProfile = 'https://www.google.com/maps/contrib/105385626946375251916';
-
-// Keyless Google Maps embed (an iframe, not JavaScript) showing one of
-// the favorites — Asador Bastian, downtown. The cards above link to all six.
-const embedPlace = 'Asador Bastian, 214 W Erie St, Chicago, IL';
-const embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(embedPlace)}&output=embed`;
 ---
 
 <BaseLayout title="Sameet Sapra" description={description}>
@@ -150,31 +159,128 @@ const embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(embedPlace)
       I eat out often in Chicago and review most places I visit on Google
       Maps, where I'm a Level 8 Local Guide.
     </p>
-    <p>A few favorites:</p>
+    <p>
+      A few favorites — ranked on Beli, reviewed on Google Maps. Select one
+      to see it on the map with my review.
+    </p>
     <ul class="place-list">
       {
-        favorites.map((fav) => (
+        favorites.map((fav, i) => (
           <li>
-            <a class="place-name" href={fav.mapsUrl}>
-              {fav.name}
+            <a
+              class={`place-card${i === 0 ? ' is-selected' : ''}`}
+              href={fav.mapsUrl}
+              data-fav={i}
+              aria-current={i === 0 ? 'true' : undefined}
+            >
+              <span class="place-name">{fav.name}</span>
+              <span class="place-meta">
+                <span class="place-addr">{fav.address}</span>
+                <span class="place-scores">
+                  Beli {fav.scoreLabel} · Google{' '}
+                  <span
+                    class="stars"
+                    role="img"
+                    aria-label={`${fav.stars} out of 5 stars`}
+                  >
+                    {fav.starsLabel}
+                  </span>
+                </span>
+              </span>
             </a>
-            <div class="place-addr">{fav.address}</div>
           </li>
         ))
       }
     </ul>
-    <p>
-      All of my reviews are on my <a href={mapsProfile}>Google Maps profile</a>.
-    </p>
     <figure class="map-embed">
       <iframe
-        src={embedSrc}
-        title="Google Map: Asador Bastian, 214 W Erie St, Chicago"
+        id="fav-map"
+        src={defaultFav.embedSrc}
+        title={`Google Map: ${defaultFav.name}, ${defaultFav.street}, Chicago`}
         loading="lazy"
         allowfullscreen
         referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <figcaption>Map: Asador Bastian, 214 W Erie St.</figcaption>
+      <figcaption id="fav-caption">
+        Map: {defaultFav.name}, {defaultFav.street}.
+      </figcaption>
     </figure>
+    <div class="review-panel">
+      <p class="review-meta" id="fav-review-meta">
+        My Google review · {defaultFav.dateLabel}
+      </p>
+      <p class="review-body" id="fav-review-body">
+        {defaultFav.excerpt}
+      </p>
+      <button
+        type="button"
+        class="review-more"
+        id="fav-review-more"
+        aria-expanded="false"
+        hidden={!defaultFav.hasMore}
+      >
+        Read full review
+      </button>
+    </div>
+    <p>
+      All of my reviews are on my <a href={mapsProfile}>Google Maps profile</a>.
+    </p>
+    <script type="application/json" id="fav-data" set:html={favPayload} />
+    <script is:inline>
+      (function () {
+        var dataEl = document.getElementById('fav-data');
+        var map = document.getElementById('fav-map');
+        var caption = document.getElementById('fav-caption');
+        var meta = document.getElementById('fav-review-meta');
+        var body = document.getElementById('fav-review-body');
+        var more = document.getElementById('fav-review-more');
+        if (!dataEl || !map || !body) return;
+        var places;
+        try {
+          places = JSON.parse(dataEl.textContent);
+        } catch (e) {
+          return;
+        }
+        var cards = Array.prototype.slice.call(
+          document.querySelectorAll('[data-fav]'),
+        );
+        var current = 0;
+        var expanded = false;
+        function render() {
+          var p = places[current];
+          map.src = p.embedSrc;
+          map.title = 'Google Map: ' + p.name + ', ' + p.street + ', Chicago';
+          if (caption)
+            caption.textContent = 'Map: ' + p.name + ', ' + p.street + '.';
+          if (meta) meta.textContent = 'My Google review · ' + p.dateLabel;
+          body.textContent = expanded ? p.review : p.excerpt;
+          if (more) {
+            more.hidden = !p.hasMore;
+            more.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            more.textContent = expanded ? 'Show less' : 'Read full review';
+          }
+          cards.forEach(function (c, i) {
+            c.classList.toggle('is-selected', i === current);
+            if (i === current) c.setAttribute('aria-current', 'true');
+            else c.removeAttribute('aria-current');
+          });
+        }
+        cards.forEach(function (card, i) {
+          card.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (i !== current) {
+              current = i;
+              expanded = false;
+              render();
+            }
+          });
+        });
+        if (more)
+          more.addEventListener('click', function () {
+            expanded = !expanded;
+            render();
+          });
+      })();
+    </script>
   </section>
 
   <section>

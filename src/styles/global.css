@@ -407,12 +407,35 @@ h3 {
 }
 
 .place-list li {
-  padding: 0.85rem 0;
   border-bottom: 1px solid var(--rule);
 }
 
 .place-list li:last-child {
   border-bottom: none;
+}
+
+/* Each card is a plain link to the place's Google Maps listing; a small
+   inline script (the page's one deliberate bit of JS) turns clicks into
+   selection — map + review swap — instead of navigation. */
+.place-card {
+  display: block;
+  padding: 0.85rem 0.6rem;
+  margin: 0 -0.6rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.place-card:hover {
+  background: var(--paper-raised);
+}
+
+.place-card.is-selected {
+  background: var(--paper-raised);
+}
+
+.place-card.is-selected .place-name {
+  color: var(--accent);
 }
 
 .place-name {
@@ -421,14 +444,60 @@ h3 {
   text-decoration: none;
 }
 
-.place-name:hover {
+.place-card:hover .place-name {
   color: var(--accent);
+}
+
+.place-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.15rem 1rem;
+  margin-top: 0.1rem;
 }
 
 .place-addr {
   color: var(--ink-faint);
   font-size: 0.93rem;
-  margin-top: 0.1rem;
+}
+
+.place-scores {
+  color: var(--ink-faint);
+  font-size: 0.93rem;
+  white-space: nowrap;
+}
+
+.place-scores .stars {
+  letter-spacing: 0.08em;
+}
+
+/* His own Google review of the selected place. */
+.review-panel {
+  margin-top: 1.1rem;
+}
+
+.review-meta {
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+  margin: 0 0 0.3rem;
+}
+
+.review-body {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.review-more {
+  margin-top: 0.5rem;
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 0.93rem;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 /* Embedded Google Map (third-party iframe; the site's one external
