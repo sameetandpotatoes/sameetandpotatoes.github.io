@@ -1,0 +1,48 @@
+# Sameet Sapra
+
+> Personal website of Sameet Sapra, a software engineer based in Chicago.
+> B.S. and M.C.S. in Computer Science (minor in Mathematical Statistics),
+> University of Illinois Urbana-Champaign, Class of 2019.
+
+## Pages
+
+- [Home](https://www.sameetsapra.com/): Introduction, selected writing,
+  published work, and eating.
+- [About](https://www.sameetsapra.com/about/): Background, current work,
+  published work, and profiles.
+- [Posts](https://www.sameetsapra.com/posts/): All posts, 2013–present.
+- [Places](https://www.sameetsapra.com/places/): A world map of the cities
+  where he has reviewed restaurants — 805 reviews across 77 cities, with a
+  favorite and a top five in each, ranked from his Beli list and Google
+  reviews. He is a Level 8 Google Maps Local Guide.
+- [RSS](https://www.sameetsapra.com/rss.xml)
+
+## Selected posts
+
+- [I got hacked — here's my story and what I learned](https://www.sameetsapra.com/posts/i-got-hacked/)
+  (2023): An iCloud account takeover and phone-number port-out — timeline
+  and lessons.
+- [Reflecting on my last year at UIUC](https://www.sameetsapra.com/posts/last-year-at-uiuc/)
+  (2019): Graduate school, teaching, and a master's without research.
+- [SOA Made Simple](https://www.sameetsapra.com/posts/soa-made-simple/)
+  (2017): How ACM at UIUC rebuilt its web infrastructure (Project Groot)
+  as microservices.
+
+## Published work
+
+- Scalable data classification for security and privacy — Engineering at
+  Meta, 2020; arXiv:2006.14109.
+- Data-Driven Approach to Picking the Most Optimal Classification
+  Algorithm — Illinois Data Science Initiative, 2017.
+
+## Profiles
+
+- GitHub: https://github.com/sameetandpotatoes
+- LinkedIn: https://www.linkedin.com/in/sameetsapra
+- Google Maps (Local Guide):
+  https://www.google.com/maps/contrib/105385626946375251916
+
+## Note
+
+This entire site is managed by Muse, an AI agent, under Sameet's
+direction.

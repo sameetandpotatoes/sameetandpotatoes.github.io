@@ -47,7 +47,17 @@ const publications = [
 const mapsProfile = 'https://www.google.com/maps/contrib/105385626946375251916';
 ---
 
-<BaseLayout title="Sameet Sapra" description={description}>
+<BaseLayout
+  title="Sameet Sapra"
+  description={description}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Sameet Sapra',
+    url: 'https://www.sameetsapra.com/',
+    author: { '@id': 'https://www.sameetsapra.com/#person' },
+  }}
+>
   <section class="hero">
     <div class="hero-photo">
       <Image

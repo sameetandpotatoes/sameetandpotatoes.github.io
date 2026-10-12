@@ -26,6 +26,20 @@ const fmt = (d: Date) =>
 // Reading time from the raw markdown body (~200 wpm, minimum 1).
 const wordCount = (post.body ?? '').split(/\s+/).filter(Boolean).length;
 const readMinutes = Math.max(1, Math.round(wordCount / 200));
+
+const postUrl = new URL(`/posts/${post.id}/`, Astro.site).href;
+const ogImageUrl = new URL(`/images/og/${post.id}.jpg`, Astro.site).href;
+const blogPostingJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  author: { '@id': 'https://www.sameetsapra.com/#person' },
+  image: ogImageUrl,
+  mainEntityOfPage: postUrl,
+  ...(post.data.tags.length > 0 ? { keywords: post.data.tags.join(', ') } : {}),
+};
 ---
 
 <BaseLayout
@@ -33,6 +47,8 @@ const readMinutes = Math.max(1, Math.round(wordCount / 200));
   description={post.data.description}
   ogType="article"
   publishedTime={post.data.pubDate}
+  ogImagePath={`/images/og/${post.id}.jpg`}
+  jsonLd={blogPostingJsonLd}
 >
   <article class="measure post-article">
     <header class="post-header">
