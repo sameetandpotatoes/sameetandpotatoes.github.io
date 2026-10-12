@@ -521,3 +521,138 @@ h3 {
   font-size: 0.88rem;
   margin-top: 0.45rem;
 }
+
+/* ---------- Places (world pins) ---------- */
+
+/* A static SVG landmass with one pin per city — no tiles, no zoom,
+   no list. The map is the page; the card below it is the detail. */
+
+.world-map-wrap {
+  margin-top: 2rem;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--paper-raised);
+  padding: 0.8rem 0.6rem 0.4rem;
+}
+
+.world-map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.world-land {
+  fill: #eae1cd;
+  stroke: #d5c7a8;
+  stroke-width: 0.8;
+  stroke-linejoin: round;
+}
+
+.pin {
+  fill: var(--accent);
+  fill-opacity: 0.78;
+  stroke: var(--paper);
+  stroke-width: 1.1;
+  cursor: pointer;
+}
+
+.pin:hover,
+.pin:focus-visible {
+  fill-opacity: 1;
+  outline: none;
+}
+
+.pin.is-selected {
+  fill: #7c2d16;
+  fill-opacity: 1;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+}
+
+.pin-label {
+  font-size: 15px;
+  font-weight: 650;
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: var(--paper-raised);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.places-note {
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+  margin-top: 0.9rem;
+  text-align: center;
+}
+
+.city-card {
+  max-width: 38rem;
+  margin: 1.4rem auto 0;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--paper-raised);
+  padding: 1.2rem 1.3rem;
+}
+
+.city-card-name {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.city-card-meta {
+  color: var(--ink-faint);
+  font-size: 0.93rem;
+  margin: 0.2rem 0 0;
+}
+
+.city-card-photo {
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+
+.city-card-favlabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 1.2rem 0 0.25rem;
+}
+
+.city-card-favname {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.city-card-scores {
+  color: var(--ink-faint);
+  font-size: 0.93rem;
+  margin: 0.15rem 0 0;
+}
+
+.city-card-scores .stars {
+  letter-spacing: 0.08em;
+}
+
+.city-card .review-meta {
+  margin-top: 0.9rem;
+}
+
+.city-card-link {
+  margin: 0.8rem 0 0;
+  font-size: 0.95rem;
+}
+
+.city-card-nofav {
+  color: var(--ink-soft);
+  margin: 1.2rem 0 0;
+}
+
+@media (max-width: 820px) {
+  .pin-label {
+    font-size: 19px;
+  }
+}

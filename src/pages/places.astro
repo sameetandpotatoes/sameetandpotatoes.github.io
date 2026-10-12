@@ -1,0 +1,301 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import placesData from '../data/places.json';
+import worldLand from '../data/world-land.json';
+
+// Places I've been, by city — built from my own Google Maps reviews
+// and Beli rankings by scripts/generate_places.py (see that file for
+// the favorite-picking rules; nothing here is hand-picked). The map
+// is a static SVG landmass (scripts/generate_world.mjs, Natural
+// Earth) with one pin per city — no tiles, no zoom, just the pins.
+const description =
+  'A world map of pins for the cities where Sameet Sapra has reviewed restaurants on Google Maps, with a favorite in each — ranked on Beli where ranked, five-starred where not.';
+
+const flatText = (t: string) => t.replace(/\s+/g, ' ').trim();
+const makeExcerpt = (t: string, max = 200) => {
+  const flat = flatText(t);
+  if (flat.length <= max) return flat;
+  const cut = flat.slice(0, max);
+  return cut.slice(0, cut.lastIndexOf(' ')) + '…';
+};
+
+// Mercator projection — must match scripts/generate_world.mjs.
+const W = 1000;
+const H = 520;
+const LAT_MIN = -60;
+const LAT_MAX = 84;
+const merc = (lat: number) => {
+  const r = (Math.max(LAT_MIN, Math.min(LAT_MAX, lat)) * Math.PI) / 180;
+  return Math.log(Math.tan(Math.PI / 4 + r / 2));
+};
+const MERC_MIN = merc(LAT_MIN);
+const MERC_MAX = merc(LAT_MAX);
+const project = (lat: number, lng: number): [number, number] => [
+  ((lng + 180) / 360) * W,
+  H - ((merc(lat) - MERC_MIN) / (merc(LAT_MAX) - merc(LAT_MIN))) * H,
+];
+const radiusFor = (n: number) => 3.5 + Math.min(7, Math.sqrt(n));
+
+const cities = placesData.map((c) => {
+  const [x, y] = project(c.lat, c.lng);
+  return {
+    ...c,
+    x: Math.round(x * 10) / 10,
+    y: Math.round(y * 10) / 10,
+    r: Math.round(radiusFor(c.count) * 10) / 10,
+    favorite: c.favorite
+      ? {
+          ...c.favorite,
+          starsLabel: '★'.repeat(c.favorite.stars),
+          excerpt: makeExcerpt(c.favorite.review),
+          hasMore: flatText(c.favorite.review).length > makeExcerpt(c.favorite.review).length,
+        }
+      : null,
+  };
+});
+const defaultCity = cities[0];
+const totalPlaces = cities.reduce((n, c) => n + c.count, 0);
+
+// Payload for the card script. Escaped so no review text can break
+// out of the JSON script block.
+const placesPayload = JSON.stringify(
+  cities.map((c) => ({
+    slug: c.slug,
+    city: c.city,
+    region: c.region,
+    count: c.count,
+    favorite: c.favorite
+      ? {
+          name: c.favorite.name,
+          method: c.favorite.method,
+          scoreLabel: c.favorite.scoreLabel,
+          stars: c.favorite.stars,
+          starsLabel: c.favorite.starsLabel,
+          dateLabel: c.favorite.dateLabel,
+          excerpt: c.favorite.excerpt,
+          review: c.favorite.review,
+          hasMore: c.favorite.hasMore,
+          mapsUrl: c.favorite.mapsUrl,
+        }
+      : null,
+  })),
+).replace(/</g, '\\u003c');
+
+const mapsProfile = 'https://www.google.com/maps/contrib/105385626946375251916';
+---
+
+<BaseLayout title="Places" description={description}>
+  <section class="measure">
+    <h1>Places</h1>
+    <p>
+      Pins for places I've been — {totalPlaces} reviews across{' '}
+      {cities.length} cities, mostly restaurants I reviewed on Google
+      Maps and ranked on Beli. Tap a pin for my favorite in that city.
+    </p>
+  </section>
+
+  <div class="world-map-wrap">
+    <svg
+      class="world-map"
+      viewBox={`0 0 ${W} ${H}`}
+      role="group"
+      aria-label="World map with a pin for each city I have reviewed places in"
+    >
+      <path class="world-land" d={worldLand.path}></path>
+      {
+        cities.map((c, i) => (
+          <circle
+            class={`pin${i === 0 ? ' is-selected' : ''}`}
+            data-city={i}
+            cx={c.x}
+            cy={c.y}
+            r={c.r}
+            tabindex="0"
+            role="button"
+            aria-label={`${c.city} — ${c.count} places reviewed`}
+          >
+            <title>{`${c.city} · ${c.count} reviewed`}</title>
+          </circle>
+        ))
+      }
+      <text
+        class="pin-label"
+        id="pin-label"
+        x={defaultCity.x}
+        y={defaultCity.y - defaultCity.r - 9}
+        text-anchor="middle"
+      >
+        {defaultCity.city}
+      </text>
+    </svg>
+  </div>
+
+  <aside class="city-card" id="city-card" aria-live="polite">
+    <h2 class="city-card-name" id="cc-city">{defaultCity.city}</h2>
+    <p class="city-card-meta" id="cc-meta">
+      {defaultCity.region} · {defaultCity.count} places reviewed
+    </p>
+    <div id="cc-fav">
+      {
+        defaultCity.favorite ? (
+          <>
+            <p class="city-card-favlabel">Favorite</p>
+            <p class="city-card-favname">{defaultCity.favorite.name}</p>
+            <p class="city-card-scores">
+              {defaultCity.favorite.method === 'beli' ? (
+                <>Beli {defaultCity.favorite.scoreLabel} · </>
+              ) : null}
+              Google{' '}
+              <span
+                class="stars"
+                role="img"
+                aria-label={`${defaultCity.favorite.stars} out of 5 stars`}
+              >
+                {defaultCity.favorite.starsLabel}
+              </span>
+            </p>
+            <p class="review-meta">
+              My Google review · {defaultCity.favorite.dateLabel}
+            </p>
+            <p class="review-body" id="cc-review">
+              {defaultCity.favorite.excerpt}
+            </p>
+            <button
+              type="button"
+              class="review-more"
+              id="cc-more"
+              aria-expanded="false"
+              hidden={!defaultCity.favorite.hasMore}
+            >
+              Read full review
+            </button>
+            <p class="city-card-link">
+              <a id="cc-maps" href={defaultCity.favorite.mapsUrl}>
+                View on Google Maps →
+              </a>
+            </p>
+          </>
+        ) : (
+          <p class="city-card-nofav">
+            No single favorite here — nothing ranked on Beli, and no
+            five-star review to fall back on.
+          </p>
+        )
+      }
+    </div>
+  </aside>
+  <p class="places-note">
+    Full review history is on my{' '}
+    <a href={mapsProfile}>Google Maps profile</a>.
+  </p>
+
+  <script type="application/json" id="places-data" set:html={placesPayload} />
+  <script>
+    interface FavPayload {
+      name: string;
+      method: string;
+      scoreLabel: string | null;
+      stars: number;
+      starsLabel: string;
+      dateLabel: string;
+      excerpt: string;
+      review: string;
+      hasMore: boolean;
+      mapsUrl: string;
+    }
+    interface CityPayload {
+      slug: string;
+      city: string;
+      region: string;
+      count: number;
+      favorite: FavPayload | null;
+    }
+
+    const dataEl = document.getElementById('places-data');
+    const cityEl = document.getElementById('cc-city');
+    const metaEl = document.getElementById('cc-meta');
+    const favEl = document.getElementById('cc-fav');
+    const labelEl = document.getElementById('pin-label');
+    if (dataEl && cityEl && metaEl && favEl) {
+      let cities: CityPayload[] = [];
+      try {
+        cities = JSON.parse(dataEl.textContent || '[]');
+      } catch (e) {
+        cities = [];
+      }
+      const pins = Array.prototype.slice.call(
+        document.querySelectorAll('.pin'),
+      ) as SVGCircleElement[];
+      let current = 0;
+      let expanded = false;
+
+      const esc = (s: string) =>
+        s.replace(/[&<>"']/g, (ch) => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;',
+          '"': '&quot;', "'": '&#39;',
+        })[ch] as string);
+
+      function renderCard() {
+        const c = cities[current];
+        cityEl.textContent = c.city;
+        metaEl.textContent = `${c.region} · ${c.count} places reviewed`;
+        const f = c.favorite;
+        if (!f) {
+          favEl.innerHTML =
+            '<p class="city-card-nofav">No single favorite here — ' +
+            'nothing ranked on Beli, and no five-star review to fall ' +
+            'back on.</p>';
+          return;
+        }
+        const scores =
+          (f.method === 'beli' ? `Beli ${f.scoreLabel} · ` : '') +
+          `Google <span class="stars" role="img" aria-label="${f.stars} ` +
+          `out of 5 stars">${f.starsLabel}</span>`;
+        favEl.innerHTML =
+          '<p class="city-card-favlabel">Favorite</p>' +
+          `<p class="city-card-favname">${esc(f.name)}</p>` +
+          `<p class="city-card-scores">${scores}</p>` +
+          `<p class="review-meta">My Google review · ${esc(f.dateLabel)}</p>` +
+          `<p class="review-body" id="cc-review">${esc(expanded ? f.review : f.excerpt)}</p>` +
+          (f.hasMore
+            ? `<button type="button" class="review-more" id="cc-more" ` +
+              `aria-expanded="${expanded}">${expanded ? 'Show less' : 'Read full review'}</button>`
+            : '') +
+          `<p class="city-card-link"><a href="${esc(f.mapsUrl)}">` +
+          'View on Google Maps →</a></p>';
+        const more = document.getElementById('cc-more');
+        if (more) {
+          more.addEventListener('click', () => {
+            expanded = !expanded;
+            renderCard();
+          });
+        }
+      }
+
+      function select(i: number) {
+        current = i;
+        expanded = false;
+        renderCard();
+        pins.forEach((p, j) => p.classList.toggle('is-selected', j === i));
+        if (labelEl && pins[i]) {
+          const cx = parseFloat(pins[i].getAttribute('cx') || '0');
+          const cy = parseFloat(pins[i].getAttribute('cy') || '0');
+          const r = parseFloat(pins[i].getAttribute('r') || '5');
+          labelEl.setAttribute('x', String(cx));
+          labelEl.setAttribute('y', String(Math.max(16, cy - r - 9)));
+          labelEl.textContent = cities[i].city;
+        }
+      }
+
+      pins.forEach((pin, i) => {
+        pin.addEventListener('click', () => select(i));
+        pin.addEventListener('keydown', (e: KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            select(i);
+          }
+        });
+      });
+    }
+  </script>
+</BaseLayout>
