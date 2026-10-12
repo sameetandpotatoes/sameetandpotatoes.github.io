@@ -370,7 +370,135 @@ h3 {
 /* ---------- Post page ---------- */
 
 .post-header {
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
+}
+
+.post-kicker {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.7rem;
+}
+
+.post-article .post-header h1 {
+  font-size: 2.55rem;
+  line-height: 1.14;
+  margin-bottom: 0.9rem;
+}
+
+.post-deck {
+  font-family: var(--font-display);
+  font-size: 1.27rem;
+  line-height: 1.5;
+  color: var(--ink-faint);
+  margin: 0 0 1.4rem;
+}
+
+.byline {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.75rem 0;
+}
+
+.byline img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.byline-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.byline-meta {
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+/* Reading treatment for posts: serif body at a comfortable size,
+   pull-quote blockquotes. Scoped to post pages — About keeps the
+   plainer prose above. */
+.post-article .prose {
+  font-family: var(--font-display);
+  font-size: 1.21rem;
+  line-height: 1.8;
+  color: #2c2416;
+}
+
+.post-article .prose p {
+  margin-bottom: 1.5rem;
+}
+
+.post-article .prose blockquote {
+  border-left: none;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.38rem;
+  line-height: 1.45;
+  color: var(--ink);
+  padding: 0 1rem;
+  margin: 2.4rem 0;
+}
+
+.post-article .prose blockquote p {
+  margin: 0;
+}
+
+.author-card {
+  display: flex;
+  gap: 1.15rem;
+  align-items: center;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 1.4rem 1.5rem;
+  margin-top: 3rem;
+}
+
+.author-card img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+.author-card-name {
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  font-weight: 600;
+  margin: 0 0 0.2rem;
+}
+
+.author-card-bio {
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .post-article .post-header h1 {
+    font-size: 2rem;
+  }
+
+  .post-article .prose {
+    font-size: 1.13rem;
+  }
+
+  .author-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .tag-list {
