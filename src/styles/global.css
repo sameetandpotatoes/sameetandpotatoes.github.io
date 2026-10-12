@@ -3,15 +3,15 @@
    Fraunces (display serif, optical sizing on) + Inter (body/UI). */
 
 :root {
-  --paper: #faf7f2;
-  --paper-raised: #fffdf9;
-  --ink: #262019;
-  --ink-soft: #575046;
-  --ink-faint: #8a8072;
-  --accent: #9a3f26;
+  --paper: #f7f0e1;
+  --paper-raised: #fffaf0;
+  --ink: #211a12;
+  --ink-soft: #55483a;
+  --ink-faint: #97826a;
+  --accent: #9c3d20;
   --accent-soft: #b5563a;
-  --rule: #e8e1d1;
-  --code-bg: #f0e9dc;
+  --rule: #e2d3b8;
+  --code-bg: #eee1c8;
 
   --font-body: "Inter Variable", -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -444,8 +444,8 @@ h3 {
 }
 
 .world-land {
-  fill: #eae1cd;
-  stroke: #d5c7a8;
+  fill: #ecdfc2;
+  stroke: #cdb488;
   stroke-width: 0.8;
   stroke-linejoin: round;
 }
