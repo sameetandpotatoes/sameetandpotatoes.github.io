@@ -7,7 +7,7 @@ Sameet Sapra is a Software Engineer at Meta, based in Chicago. He holds a B.S. a
 
 ## Now
 
-Building software and following what's new in AI. He lives in Chicago's West Loop. This site collects his writing and published work.
+Building software and following what's new in AI. This site collects his writing and published work.
 
 ## Background
 
@@ -19,14 +19,6 @@ At UIUC, Sameet worked on Project Groot, ACM at UIUC's microservice-based rebuil
 - Co-author, "Scalable Data Classification for Security and Privacy," arXiv:2006.14109 (2020), with Paulo Tanaka and Nikolay Laptev: https://doi.org/10.48550/arXiv.2006.14109
 - Co-author, Groot poster for Engineering Open House 2017, ACM at UIUC, presented March 10–11, 2017: https://github.com/acm-uiuc/publications/blob/HEAD/Groot_EOH2017_Poster/README.md
 - Co-author, "Data-Driven Approach to Picking the Most Optimal Classification Algorithm," Illinois Data Science Initiative technical report, June 26, 2017.
-
-## Outside work
-
-- Reviews the restaurants he visits on Google Maps, where he is a Level 8 Local Guide. A few favorites are listed on the [home page](/).
-- Coffee, mostly design-led cafés in Chicago.
-- Follows Chicago city politics and ward news.
-- Mechanical watches.
-- Currently learning Hindi.
 
 ## Profiles
 
