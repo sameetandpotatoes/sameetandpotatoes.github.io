@@ -543,6 +543,25 @@ h3 {
   margin-top: 0.9rem;
 }
 
+.top-list {
+  margin: 0.3rem 0 0;
+  padding-left: 1.4rem;
+}
+
+.top-list li {
+  margin: 0.3rem 0;
+}
+
+.top-list .stars {
+  letter-spacing: 0.08em;
+}
+
+.top-meta {
+  color: var(--ink-faint);
+  font-size: 0.93rem;
+  white-space: nowrap;
+}
+
 .city-card-link {
   margin: 0.8rem 0 0;
   font-size: 0.95rem;

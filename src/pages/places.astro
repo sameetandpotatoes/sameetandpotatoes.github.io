@@ -51,6 +51,10 @@ const cities = placesData.map((c) => {
           hasMore: flatText(c.favorite.review).length > makeExcerpt(c.favorite.review).length,
         }
       : null,
+    top: (c.top ?? []).map((t) => ({
+      ...t,
+      starsLabel: '★'.repeat(t.stars),
+    })),
   };
 });
 const defaultCity = cities[0];
@@ -78,6 +82,13 @@ const placesPayload = JSON.stringify(
           mapsUrl: c.favorite.mapsUrl,
         }
       : null,
+    top: c.top.map((t) => ({
+      name: t.name,
+      scoreLabel: t.scoreLabel,
+      stars: t.stars,
+      starsLabel: t.starsLabel,
+      mapsUrl: t.mapsUrl,
+    })),
   })),
 ).replace(/</g, '\\u003c');
 
@@ -90,7 +101,8 @@ const mapsProfile = 'https://www.google.com/maps/contrib/105385626946375251916';
     <p>
       Pins for places I've been — {totalPlaces} reviews across{' '}
       {cities.length} cities, mostly restaurants I reviewed on Google
-      Maps and ranked on Beli. Tap a pin for my favorite in that city.
+      Maps and ranked on Beli. Tap a pin for my favorite in that city,
+      and the rest of my top five there.
     </p>
   </section>
 
@@ -183,6 +195,30 @@ const mapsProfile = 'https://www.google.com/maps/contrib/105385626946375251916';
         )
       }
     </div>
+    <div id="cc-top">
+      <p class="city-card-favlabel">
+        Top {defaultCity.top.length} in {defaultCity.city}
+      </p>
+      <ol class="top-list">
+        {
+          defaultCity.top.map((t) => (
+            <li>
+              <a href={t.mapsUrl}>{t.name}</a>{' '}
+              <span class="top-meta">
+                {t.scoreLabel ? <>Beli {t.scoreLabel} · </> : null}
+                <span
+                  class="stars"
+                  role="img"
+                  aria-label={`${t.stars} out of 5 stars`}
+                >
+                  {t.starsLabel}
+                </span>
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
   </aside>
   <p class="places-note">
     Full review history is on my{' '}
@@ -203,18 +239,27 @@ const mapsProfile = 'https://www.google.com/maps/contrib/105385626946375251916';
       hasMore: boolean;
       mapsUrl: string;
     }
+    interface TopPayload {
+      name: string;
+      scoreLabel: string | null;
+      stars: number;
+      starsLabel: string;
+      mapsUrl: string;
+    }
     interface CityPayload {
       slug: string;
       city: string;
       region: string;
       count: number;
       favorite: FavPayload | null;
+      top: TopPayload[];
     }
 
     const dataEl = document.getElementById('places-data');
     const cityEl = document.getElementById('cc-city');
     const metaEl = document.getElementById('cc-meta');
     const favEl = document.getElementById('cc-fav');
+    const topEl = document.getElementById('cc-top');
     const labelEl = document.getElementById('pin-label');
     if (dataEl && cityEl && metaEl && favEl) {
       let cities: CityPayload[] = [];
@@ -239,6 +284,21 @@ const mapsProfile = 'https://www.google.com/maps/contrib/105385626946375251916';
         const c = cities[current];
         cityEl.textContent = c.city;
         metaEl.textContent = `${c.region} · ${c.count} places reviewed`;
+        if (topEl) {
+          const items = c.top
+            .map(
+              (t) =>
+                `<li><a href="${esc(t.mapsUrl)}">${esc(t.name)}</a> ` +
+                `<span class="top-meta">` +
+                (t.scoreLabel ? `Beli ${t.scoreLabel} · ` : '') +
+                `<span class="stars" role="img" aria-label="${t.stars} ` +
+                `out of 5 stars">${t.starsLabel}</span></span></li>`,
+            )
+            .join('');
+          topEl.innerHTML =
+            `<p class="city-card-favlabel">Top ${c.top.length} in ` +
+            `${esc(c.city)}</p><ol class="top-list">${items}</ol>`;
+        }
         const f = c.favorite;
         if (!f) {
           favEl.innerHTML =
