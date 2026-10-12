@@ -526,6 +526,13 @@ h3 {
   border-top: 1px solid var(--rule);
 }
 
+/* ---------- Slash pages ---------- */
+
+.page-note {
+  color: var(--ink-faint);
+  font-size: 0.92rem;
+}
+
 /* ---------- Review text (Places city card) ---------- */
 
 .review-meta {

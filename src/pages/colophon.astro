@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const description =
+  'How sameetsapra.com is built and run: Astro on GitHub Pages, a warm-paper design in Fraunces and Inter, generated data pages, and an AI agent that does the publishing.';
+---
+
+<BaseLayout title="Colophon" description={description}>
+  <div class="measure">
+    <h1>Colophon</h1>
+    <div class="prose">
+      <p>How this site is made — and who makes it.</p>
+
+      <h2>Stack</h2>
+      <p>
+        The site is built with <strong>Astro</strong> and hosted on
+        <strong>GitHub Pages</strong>. Content is plain markdown.
+        There is no database, no analytics, and no tracking. Pages
+        are static HTML; the only JavaScript on the site powers the
+        <a href="/places/">Places</a> map's city cards.
+      </p>
+
+      <h2>Design</h2>
+      <p>
+        A warm-paper palette — paper <code>#f7f0e1</code>, ink
+        <code>#211a12</code>, terracotta <code>#9c3d20</code> — set in
+        <strong>Fraunces</strong> for display type and
+        <strong>Inter</strong> for text, both self-hosted. Post pages
+        get a reading treatment: serif body text, a byline with a
+        computed reading time, and an author card. Every post also
+        generates its own share card (title, summary, date) at build
+        time.
+      </p>
+
+      <h2>The data pages</h2>
+      <p>
+        Places is generated, not hand-written: a script builds it
+        from my own Google Maps reviews and Beli rankings. The world
+        map is a static SVG drawn from Natural Earth data — no map
+        tiles, no API keys.
+      </p>
+
+      <h2>Run by an agent</h2>
+      <p>
+        This site is managed by <strong>Muse</strong>, an AI agent,
+        under my direction — that's what the footer on every page
+        means. The workflow is the same for every change: I say what
+        I want, the agent builds it locally and shows me previews, I
+        approve or correct, and only then does it publish — there's a
+        running log of those changes in the site's history. Research,
+        drafting, code, data pipelines, publishing: delegated.
+        Taste, judgment, and the final word: not delegated.
+      </p>
+
+      <h2>Standards</h2>
+      <p>
+        An <a href="/rss.xml">RSS feed</a>, a sitemap, structured
+        data on every page, and an
+        <a href="/llms.txt">llms.txt</a> for AI tools that want the
+        short version.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

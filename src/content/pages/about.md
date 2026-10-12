@@ -27,3 +27,9 @@ At UIUC, Sameet worked on Project Groot, ACM at UIUC's microservice-based rebuil
 - Wikidata: https://www.wikidata.org/wiki/Q141455950
 - Devpost: https://devpost.com/sameetandpotatoes
 - Instagram: https://www.instagram.com/sameetandpotatoes/
+
+## Elsewhere on this site
+
+- [Now](/now/) — what he's focused on this season
+- [Uses](/uses/) — the hardware and software he uses
+- [Colophon](/colophon/) — how this site is built and run

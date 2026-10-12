@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const description =
+  'The hardware, software, and services Sameet Sapra uses day to day — desk setup, everyday tech, the apps he relies on, and the stack behind this site.';
+---
+
+<BaseLayout title="Uses" description={description}>
+  <div class="measure">
+    <h1>Uses</h1>
+    <div class="prose">
+      <p>The tools I actually use, kept current as they change.</p>
+
+      <h2>Desk</h2>
+      <ul>
+        <li>
+          <strong>Mac mini</strong> — my main computer, at home and as
+          the house server.
+        </li>
+        <li>
+          <strong>Dell UltraSharp U4025QW</strong> — a 40-inch curved
+          ultrawide. One screen, everything on it.
+        </li>
+      </ul>
+
+      <h2>Everyday</h2>
+      <ul>
+        <li><strong>iPhone</strong> — camera, messages, everything.</li>
+        <li>
+          <strong>RingConn</strong> — sleep and recovery tracking,
+          synced into Apple Health.
+        </li>
+      </ul>
+
+      <h2>Apps and services</h2>
+      <ul>
+        <li>
+          <strong>Muse</strong> — the AI agent that manages this
+          site and a good share of my life admin. See the
+          <a href="/colophon/">colophon</a>.
+        </li>
+        <li>
+          <strong>Google Maps</strong> — where I review restaurants.
+          I'm a Level 8 Local Guide; 805 reviews and counting.
+        </li>
+        <li>
+          <strong>Beli</strong> — where I rank them against each other.
+          My rankings feed the <a href="/places/">Places</a> page.
+        </li>
+        <li>
+          <strong>Spotify</strong> — music and podcasts, all day.
+        </li>
+      </ul>
+
+      <h2>This site</h2>
+      <ul>
+        <li><strong>Astro</strong>, hosted on <strong>GitHub Pages</strong>.</li>
+        <li>
+          <strong>Fraunces</strong> and <strong>Inter</strong>,
+          self-hosted. No analytics, no trackers.
+        </li>
+      </ul>
+    </div>
+  </div>
+</BaseLayout>

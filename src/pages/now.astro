@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const description =
+  'What Sameet Sapra is focused on right now: software engineering in Chicago, building with AI agents, writing again, and eating his way through his own map.';
+---
+
+<BaseLayout title="Now" description={description}>
+  <div class="measure">
+    <h1>Now</h1>
+    <div class="prose">
+      <p><em>Updated October 2026, from Chicago.</em></p>
+
+      <p>
+        I'm a software engineer at Meta, based in Chicago. Most of my
+        building energy right now goes two places:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Building with AI agents.</strong> I run much of my
+          life admin — and now this entire website — through an AI
+          agent I direct. The site you're reading is the experiment:
+          it sat untouched for three years because updating it was a
+          chore, and now it changes whenever I ask. A longer post
+          about what I delegate, what I don't, and what I've had to
+          teach it is in the works.
+        </li>
+        <li>
+          <strong>Writing again.</strong> My last post before this
+          stretch was in 2023. I'm publishing shorter pieces as they
+          come, and longer posts when something earns the length.
+        </li>
+      </ul>
+
+      <p>
+        Outside of work, I'm getting to know Chicago properly —
+        neighborhoods, politics, and restaurants. I've reviewed 276
+        places in this city alone; they're all on the
+        <a href="/places/">Places</a> map.
+      </p>
+
+      <p class="page-note">
+        This is a <a href="https://nownownow.com/about">now page</a> —
+        what I'd tell a friend I haven't seen in a year.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
